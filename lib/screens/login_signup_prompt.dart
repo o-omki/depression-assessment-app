@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:glassmorphism/glassmorphism.dart';
+import 'package:serenity_space/screens/dashboard.dart';
 
 class PromptMenu extends StatelessWidget {
   const PromptMenu({super.key});
@@ -69,7 +70,12 @@ class PromptMenu extends StatelessWidget {
                     height: 145,
                   ),
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                        return const Dashboard();
+                      }));
+                    },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color.fromARGB(255, 148, 220, 150),
                       padding: const EdgeInsets.symmetric(
