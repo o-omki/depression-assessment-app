@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:serenity_space/login_signup_prompt.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,13 +14,9 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Serenity Space',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.green,
       ),
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Home Page'),
-        ),
-      ),
+      home: PromptMenu(),
     );
   }
 }
