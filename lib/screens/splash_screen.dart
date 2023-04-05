@@ -43,7 +43,7 @@ class _SplashScreenState extends State<SplashScreen> {
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset("asset/icons/mental_health.png",
+            Image.asset("assets/icons/mental_health.png",
             width: 140,
             height: 140,
             fit: BoxFit.fitHeight,
