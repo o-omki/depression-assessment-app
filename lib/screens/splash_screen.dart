@@ -1,6 +1,7 @@
 import "dart:async";
 
 import "package:flutter/material.dart";
+import "package:flutter/services.dart";
 import "package:serenity_space/screens/login_signup_prompt.dart";
 
 class SplashScreen extends StatefulWidget {
@@ -14,12 +15,11 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    Timer(const Duration(seconds: 3), () {
+    Future.delayed(const Duration(seconds: 3), () {
+      SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) {
-          return const PromptMenu();
-        }),
+        MaterialPageRoute(builder: (_) => const PromptMenu()),
       );
     });
   }
