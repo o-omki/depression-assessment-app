@@ -2,6 +2,9 @@ import "package:flutter/material.dart";
 import "package:flutter/services.dart";
 import "package:serenity_space/screens/splash_screen.dart";
 
+//global object to access device screen size
+late Size mq;
+
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   //start app in full screen

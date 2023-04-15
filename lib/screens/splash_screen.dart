@@ -2,6 +2,8 @@ import "dart:async";
 
 import "package:flutter/material.dart";
 import "package:flutter/services.dart";
+
+import "package:serenity_space/main.dart";
 import "package:serenity_space/screens/login_signup_prompt.dart";
 
 class SplashScreen extends StatefulWidget {
@@ -26,10 +28,11 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
+    mq = MediaQuery.of(context).size;
     return Scaffold(
       body: Container(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
+        width: mq.width,
+        height: mq.height,
         decoration: const BoxDecoration(
           gradient: LinearGradient(
             colors: [Color(0XFF33CC33), Colors.black],
