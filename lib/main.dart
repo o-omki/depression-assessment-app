@@ -1,7 +1,10 @@
+import "package:flutter_dotenv/flutter_dotenv.dart";
 import "package:flutter/material.dart";
+
 import "package:serenity_space/screens/splash_screen.dart";
 
-void main() {
+Future main() async {
+  await dotenv.load();
   runApp(const MyApp());
 }
 
@@ -10,6 +13,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: "Serenity Space",
