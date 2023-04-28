@@ -8,7 +8,7 @@ import 'package:serenity_space/main.dart';
 
 import '../../api/apis.dart';
 import '../../helper/dialogs.dart';
-import '../home_screen.dart';
+import '../../helper/bottom_nav_bar.dart';
 import 'signup.dart';
 
 class Login extends StatefulWidget {
@@ -48,7 +48,7 @@ class _LoginState extends State<Login> {
         //   });
         // }
         Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (_) => const HomeScreen()));
+            context, MaterialPageRoute(builder: (_) => const BottomNavBar()));
       }
     });
   }
