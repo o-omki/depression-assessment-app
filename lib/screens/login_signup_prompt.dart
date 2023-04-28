@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:glassmorphism/glassmorphism.dart';
-import 'package:serenity_space/screens/dashboard.dart';
+
+import '../main.dart';
+import 'auth/login.dart';
+import 'auth/signup.dart';
 
 class PromptMenu extends StatelessWidget {
   const PromptMenu({super.key});
@@ -21,8 +24,8 @@ class PromptMenu extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 7),
             child: GlassmorphicContainer(
-              width: MediaQuery.of(context).size.width * 1,
-              height: MediaQuery.of(context).size.height * 0.7,
+              width: mq.width * 1,
+              height: mq.height * 0.7,
               borderRadius: 20,
               blur: 7,
               border: 1,
@@ -71,15 +74,25 @@ class PromptMenu extends StatelessWidget {
                   ),
                   ElevatedButton(
                     onPressed: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) {
-                        return const Dashboard();
-                      }));
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const Login(),
+                        ),
+                      );
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color.fromARGB(255, 148, 220, 150),
+                      foregroundColor: const Color(0XFF33CC33),
+                      backgroundColor: const Color.fromARGB(255, 235, 252, 239),
                       padding: const EdgeInsets.symmetric(
                           vertical: 20, horizontal: 80),
+                      side: const BorderSide(
+                        color: Color(0XFF33CC33),
+                        width: 3,
+                      ),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15.0),
+                      ),
                     ),
                     child: const Text(
                       "Login",
@@ -92,10 +105,25 @@ class PromptMenu extends StatelessWidget {
                   Align(
                     alignment: Alignment.topRight,
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const SignUp(),
+                          ),
+                        );
+                      },
                       style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0XFF33CC33),
                         padding: const EdgeInsets.symmetric(
                             vertical: 20, horizontal: 80),
+                        side: const BorderSide(
+                          color: Colors.white,
+                          width: 2,
+                        ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15.0),
+                        ),
                       ),
                       child: const Text(
                         "Sign Up",
