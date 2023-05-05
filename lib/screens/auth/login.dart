@@ -8,7 +8,7 @@ import 'package:serenity_space/main.dart';
 
 import '../../api/apis.dart';
 import '../../helper/dialogs.dart';
-import '../../helper/bottom_nav_bar.dart';
+import '../bottom_nav_bar.dart';
 import 'signup.dart';
 
 class Login extends StatefulWidget {
@@ -28,6 +28,38 @@ class _LoginState extends State<Login> {
   final passwordController = TextEditingController();
 
   var _isObscured = true;
+
+  bool validateEmail(String email) {
+    String pattern = r'^[a-zA-Z0-9.!]+@[a-zA-Z0-9]+\.[a-zA-Z]+';
+    RegExp regExp = RegExp(pattern);
+    return regExp.hasMatch(email);
+  }
+
+  _loginUser() async {
+    try {
+      final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      log("Credential: $credential");
+      Navigator.pushReplacement(context,
+          MaterialPageRoute(builder: (context) => const BottomNavBar()));
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        Dialogs.showSnackbar(context, 'No user found for that email.');
+      } else if (e.code == 'wrong-password') {
+        Dialogs.showSnackbar(context, 'Wrong password provided for that user.');
+      }
+    }
+  }
+
+  @override
+  void dispose() {
+    // clean up the controller when widget is disposed
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
 
   _handleLoginBtnClick() {
     Dialogs.showProgressBar(context);
@@ -125,44 +157,15 @@ class _LoginState extends State<Login> {
                         Container(
                           margin: const EdgeInsets.symmetric(vertical: 10),
                           child: TextFormField(
-                            decoration: InputDecoration(
-                              prefixIcon: const Icon(Icons.email),
+                            decoration: const InputDecoration(
+                              prefixIcon: Icon(Icons.email),
                               hintText: 'Email',
-                              hintStyle: const TextStyle(
-                                fontSize: 20,
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderSide: const BorderSide(
-                                    color: Color(0XFF33CC33), width: 2.0),
-                                borderRadius: BorderRadius.circular(30.0),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: const BorderSide(
-                                    color: Colors.black, width: 2.0),
-                                borderRadius: BorderRadius.circular(30.0),
-                              ),
-                              errorBorder: OutlineInputBorder(
-                                borderSide: const BorderSide(
-                                    color: Color.fromARGB(255, 212, 57, 46),
-                                    width: 2.0),
-                                borderRadius: BorderRadius.circular(30.0),
-                              ),
-                              focusedErrorBorder: OutlineInputBorder(
-                                borderSide: const BorderSide(
-                                    color: Color.fromARGB(255, 212, 57, 46),
-                                    width: 2.0),
-                                borderRadius: BorderRadius.circular(30.0),
-                              ),
-                              errorStyle: const TextStyle(
-                                fontSize: 15,
-                                color: Color.fromARGB(255, 212, 57, 46),
-                              ),
                             ),
                             controller: emailController,
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return 'Please enter your Email';
-                              } else if (!value.contains('@')) {
+                              } else if (!validateEmail(value)) {
                                 return 'Please enter valid Email';
                               }
                               return null;
@@ -176,35 +179,6 @@ class _LoginState extends State<Login> {
                             decoration: InputDecoration(
                               prefixIcon: const Icon(Icons.lock),
                               hintText: 'Password',
-                              hintStyle: const TextStyle(
-                                fontSize: 20,
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderSide: const BorderSide(
-                                    color: Color(0XFF33CC33), width: 2.0),
-                                borderRadius: BorderRadius.circular(30.0),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: const BorderSide(
-                                    color: Colors.black, width: 2.0),
-                                borderRadius: BorderRadius.circular(30.0),
-                              ),
-                              errorBorder: OutlineInputBorder(
-                                borderSide: const BorderSide(
-                                    color: Color.fromARGB(255, 212, 57, 46),
-                                    width: 2.0),
-                                borderRadius: BorderRadius.circular(30.0),
-                              ),
-                              focusedErrorBorder: OutlineInputBorder(
-                                borderSide: const BorderSide(
-                                    color: Color.fromARGB(255, 212, 57, 46),
-                                    width: 2.0),
-                                borderRadius: BorderRadius.circular(30.0),
-                              ),
-                              errorStyle: const TextStyle(
-                                fontSize: 15,
-                                color: Color.fromARGB(255, 212, 57, 46),
-                              ),
                               suffixIcon: IconButton(
                                 onPressed: () {
                                   setState(() {
@@ -240,7 +214,16 @@ class _LoginState extends State<Login> {
                               height: mq.height * 0.017,
                             ),
                             ElevatedButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                // validate returns true if the form is valid, otherwise false
+                                if (_formKey.currentState!.validate()) {
+                                  setState(() {
+                                    email = emailController.text.trim();
+                                    password = passwordController.text.trim();
+                                  });
+                                  _loginUser();
+                                }
+                              },
                               style: ElevatedButton.styleFrom(
                                 minimumSize: Size.fromHeight(mq.height * 0.06),
                                 shape: const StadiumBorder(),
@@ -266,7 +249,8 @@ class _LoginState extends State<Login> {
                                 letterSpacing: 1.5),
                           ),
                         ),
-                        SizedBox(height: mq.height * 0.13),
+                        SizedBox(height: mq.height * 0.07),
+                        Spacer(),
                         Column(
                           children: [
                             ElevatedButton.icon(
