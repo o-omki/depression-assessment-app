@@ -1,51 +1,24 @@
-import "package:flutter/material.dart";
+import "package:mongo_dart/mongo_dart.dart";
+import "package:flutter_dotenv/flutter_dotenv.dart";
 
-import "../api_client.dart";
 import "../journal_entry.dart";
 
-class JournalProvider with ChangeNotifier {
-  List<JournalEntry> _journalEntries = [];
-  List<JournalEntry> get journalEntries => _journalEntries;
+class JournalProvider {
+  late Db _db;
 
-  Future<void> fetchJournalEntries() async {
-    try {
-      _journalEntries = await APIClient.fetchJournalEntires();
-      notifyListeners();
-    } catch (e) {
-      print(e.toString());
-      rethrow;
-    }
-  }
+  JournalProvider() {
+    final dbUrl = dotenv.env["MONGODB_URL"]!;
+    final dbUser = dotenv.env["MONGODB_USER"]!;
+    final dbPassword = dotenv.env['MONGODB_PASSWORD']!;
+    final dbDatabase = dotenv.env['MONGODB_DATABASE']!;
+    final dbCollection = dotenv.env['MONGODB_COLLECTION']!;
+    final dbAuthMechanism = 'SCRAM-SHA-1';
 
-  Future<void> addJournalEntry(JournalEntry journalEntry) async {
-    try {
-      await APIClient.addJournalEntry(journalEntry);
-      _journalEntries.insert(0, journalEntry);
-      notifyListeners();
-    } catch (e) {
-      print(e.toString());
-      rethrow;
-    }
-  }
+    final dbUri = Uri.parse(dbUrl);
+    final dbHost = dbUri.host;
+    final dbPort = dbUri.port;
+    final dbSsl = dbUri.scheme == "mongodb+srv";
 
-  Future<void> deleteJournalEntry(JournalEntry journalEntry) async {
-    try {
-      await APIClient.deleteJournalEntry(journalEntry);
-      _journalEntries.remove(journalEntry);
-      notifyListeners();
-    } catch (e) {
-      print(e.toString());
-      rethrow;
-    }
-  }
-
-  Future<void> updateJournalEntry(JournalEntry journalEntry) async {
-    try {
-      await APIClient.updateJournalEntry(journalEntry);
-      notifyListeners();
-    } catch (e) {
-      print(e.toString());
-      rethrow;
-    }
+    final dbCredentials = SslOptions
   }
 }
