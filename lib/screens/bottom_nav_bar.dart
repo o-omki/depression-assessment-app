@@ -1,10 +1,10 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 
-import '../screens/appointment_screen.dart';
-import '../screens/home_screen.dart';
-import '../screens/journal_screen.dart';
-import '../screens/profile_screen.dart';
+import 'appointment/appointment_screen.dart';
+import 'home/home_screen.dart';
+import 'journal/journal_screen.dart';
+import 'profile/profile_screen.dart';
 
 class BottomNavBar extends StatefulWidget {
   const BottomNavBar({super.key});
@@ -27,8 +27,9 @@ class _BottomNavBarState extends State<BottomNavBar> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        backgroundColor: Colors.white,
         bottomNavigationBar: CurvedNavigationBar(
-          height: 55,
+          height: 60,
           color: Colors.green.shade400,
           backgroundColor: Colors.white,
           animationDuration: const Duration(milliseconds: 400),
@@ -39,12 +40,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
             });
           },
         ),
-        body: Container(
-          color: Colors.white,
-          height: double.infinity,
-          width: double.infinity,
-          child: getScreen(index: _index),
-        ),
+        body: getScreen(index: _index),
       ),
     );
   }
