@@ -299,7 +299,19 @@ class _LoginState extends State<Login> {
                                         },
                                     child: const Text('Sign Up'))
                               ],
-                            )
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (_) => const BottomNavBar()));
+                              },
+                              child: const Text(
+                                'Skip Login',
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                            ),
                           ],
                         ),
                       ],
