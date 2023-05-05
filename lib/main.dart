@@ -30,6 +30,35 @@ class MyApp extends StatelessWidget {
       title: "Serenity Space",
       theme: ThemeData(
         primarySwatch: Colors.green,
+        inputDecorationTheme: InputDecorationTheme(
+          hintStyle: const TextStyle(
+            fontSize: 20,
+          ),
+          errorStyle: const TextStyle(
+            fontSize: 15,
+            color: Color.fromARGB(255, 212, 57, 46),
+          ),
+          filled: true,
+          fillColor: Colors.grey.shade200,
+          enabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.grey.shade100, width: 2.0),
+            borderRadius: BorderRadius.circular(30.0),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderSide: const BorderSide(color: Color(0XFF33CC33), width: 2.0),
+            borderRadius: BorderRadius.circular(30.0),
+          ),
+          errorBorder: OutlineInputBorder(
+            borderSide: const BorderSide(
+                color: Color.fromARGB(255, 212, 57, 46), width: 2.0),
+            borderRadius: BorderRadius.circular(30.0),
+          ),
+          focusedErrorBorder: OutlineInputBorder(
+            borderSide: const BorderSide(
+                color: Color.fromARGB(255, 212, 57, 46), width: 2.0),
+            borderRadius: BorderRadius.circular(30.0),
+          ),
+        ),
       ),
       home: const SplashScreen(),
     );
