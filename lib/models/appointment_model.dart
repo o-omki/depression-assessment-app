@@ -25,7 +25,7 @@ class AppointmentEntry {
 
   factory AppointmentEntry.fromJson(Map<String, dynamic> json) {
     return AppointmentEntry(
-      id: json['_id'],
+      id: json['_id'] ?? "",
       userId: json['user_id'],
       counsellorId: json['counsellor_id'],
       confirmed: json['confirmed'],
