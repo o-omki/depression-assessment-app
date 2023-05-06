@@ -1,7 +1,7 @@
 class AppointmentEntry {
   final String id;
   final String userId;
-  final String counselorId;
+  final String counsellorId;
   final bool confirmed;
   final String status;
   final DateTime appointmentDate;
@@ -13,7 +13,7 @@ class AppointmentEntry {
   AppointmentEntry({
     required this.id,
     required this.userId,
-    required this.counselorId,
+    required this.counsellorId,
     required this.confirmed,
     required this.status,
     required this.appointmentDate,
@@ -26,32 +26,30 @@ class AppointmentEntry {
   factory AppointmentEntry.fromJson(Map<String, dynamic> json) {
     return AppointmentEntry(
       id: json['_id'],
-      userId: json['userId'],
-      counselorId: json['counselorId'],
+      userId: json['user_id'],
+      counsellorId: json['counsellor_id'],
       confirmed: json['confirmed'],
       status: json['status'],
-      appointmentDate: DateTime.parse(json['appointmentDate']),
+      appointmentDate: DateTime.parse(json['appointment_date']),
       title: json['title'],
       description: json['description'],
-      createdAt: DateTime.parse(json['createdAt']),
-      updatedAt: DateTime.parse(json['updatedAt']),
+      createdAt: DateTime.parse(json['created_at']),
+      updatedAt: DateTime.parse(json['updated_at']),
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
       '_id': id,
-      'userId': userId,
-      'counselorId': counselorId,
+      'user_id': userId,
+      'counsellor_id': counsellorId,
       'confirmed': confirmed,
       'status': status,
-      'appointmentDate': appointmentDate.toIso8601String(),
+      'appointment_date': appointmentDate.toIso8601String(),
       'title': title,
       'description': description,
-      'createdAt': createdAt.toIso8601String(),
-      'updatedAt': updatedAt.toIso8601String(),
+      'created_at': createdAt.toIso8601String(),
+      'updated_at': updatedAt.toIso8601String(),
     };
   }
-}
-
 }
