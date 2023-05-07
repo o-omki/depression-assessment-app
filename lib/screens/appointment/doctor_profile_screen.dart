@@ -2,15 +2,16 @@ import "dart:developer";
 
 import "package:flutter/cupertino.dart";
 import "package:flutter/material.dart";
+import 'package:intl/intl.dart';
 import "package:mongo_dart/mongo_dart.dart" as mongo_package;
-import "package:serenity_space/main.dart";
-import "package:serenity_space/screens/appointment/booking_confirmation_screen.dart";
 
+import "../../models/appointment_model.dart";
+import "./booking_confirmation_screen.dart";
+import "../../api/apis.dart";
 import "../../api/mongo_api_client.dart";
 
 class DoctorProfile extends StatefulWidget {
   late Map<String, dynamic> counsellor;
-  Map<String, dynamic> appointmentDate= {};
 
   DoctorProfile(this.counsellor, {super.key});
 
@@ -26,6 +27,21 @@ class _DoctorProfileState extends State<DoctorProfile> {
     "doctor4.avif",
   ];
 
+  late DateTime appointmentDate;
+  late List<dynamic> eligibleDays;
+
+  DateTime findClosestMatchingDay(List<dynamic> eligibleDays) {
+    // Find the closest future date that matches one of the eligible days.
+
+    DateTime currentDate = DateTime.now();
+    DateTime closestDate = currentDate;
+
+    while (!eligibleDays.contains(DateFormat('EEEE').format(closestDate))) {
+      closestDate = closestDate.add(Duration(days: 1));
+    }
+
+    return closestDate;
+  }
 
   Future<Map<String, dynamic>> _getUserDetails(
       mongo_package.ObjectId userId) async {
@@ -58,14 +74,37 @@ class _DoctorProfileState extends State<DoctorProfile> {
               );
             },
           ),
-            
-          
-          
-          
-         
         );
-      }
+      },
     );
+  }
+
+  Future<void> selectAppointmentDate(BuildContext context) async {
+    // Calender Pop-up to choose one of the eligible days
+    DateTime currentDate = DateTime.now();
+
+    DateTime? selectedDate = await showDatePicker(
+      context: context,
+      initialDate: appointmentDate,
+      firstDate: DateTime.now(),
+      lastDate: currentDate.add(Duration(days: 365)),
+      selectableDayPredicate: (DateTime date) {
+        return eligibleDays.contains(DateFormat('EEEE').format(date));
+      },
+    );
+
+    if (selectedDate != null && selectedDate != appointmentDate) {
+      setState(() {
+        appointmentDate = selectedDate;
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    eligibleDays = widget.counsellor["availability"]["days"];
+    appointmentDate = findClosestMatchingDay(eligibleDays);
   }
 
   @override
@@ -109,8 +148,9 @@ class _DoctorProfileState extends State<DoctorProfile> {
                     Positioned(
                       left: MediaQuery.of(context).size.width * 0.01,
                       top: MediaQuery.of(context).size.height * 0.04,
-                      child: const CircleAvatar(
-                        backgroundImage: AssetImage("images/doctor1.jpeg"),
+                      child: CircleAvatar(
+                        backgroundImage:
+                            NetworkImage(widget.counsellor["profile_picture"]),
                         radius: 45,
                       ),
                     ),
@@ -366,8 +406,8 @@ class _DoctorProfileState extends State<DoctorProfile> {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      subtitle:
-                          Text(widget.counsellor["contact"]["address"]["street"]),
+                      subtitle: Text(
+                          widget.counsellor["contact"]["address"]["street"]),
                     ),
                   ],
                 ),
@@ -394,14 +434,16 @@ class _DoctorProfileState extends State<DoctorProfile> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "Consultation Price",
+                    DateFormat("yyyy-MM-dd").format(appointmentDate),
                     style: TextStyle(
-                      color: Colors.black54,
+                      fontSize: 20,
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                   ElevatedButton(
                       onPressed: () {
-                        showDateSelector(context);
+                        selectAppointmentDate(context);
                       },
                       child: Text("Change Date")),
                 ],
@@ -412,10 +454,26 @@ class _DoctorProfileState extends State<DoctorProfile> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => BookingConfirmationScreen(
-                        widget.counsellor,
-                        widget.appointmentDate,
-                      ),
+                      builder: (context) {
+                        AppointmentEntry newAppointment = AppointmentEntry(
+                          id: '',
+                          userId: APIs.user.uid, 
+                          counsellorId: widget.counsellor["_id"].toString(),
+                          counsellorName: widget.counsellor["name"],
+                          counsellorPicture: widget.counsellor["profile_picture"],
+                          confirmed: false,
+                          status: 'upcoming',
+                          appointmentDate: appointmentDate,
+                          description: '',
+                          createdAt: DateTime.now(),
+                          updatedAt: DateTime.now(),
+                        );
+
+                        return BookingConfirmationScreen(
+                          widget.counsellor,
+                          newAppointment,
+                        );
+                      },
                     ),
                   );
                 },
