@@ -1,4 +1,8 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+
+import '../../main.dart';
 
 class Questionnaire extends StatefulWidget {
   const Questionnaire({super.key});
@@ -212,7 +216,8 @@ class _QuestionnaireState extends State<Questionnaire> {
   int score = 0;
 
   void _selectAnswer(String option) {
-    score += int.parse(option[0]);
+    // TODO: Fix the score bug
+    score += int.parse(option[0]) - 1;
     setState(() {
       _selectedAnswers[_currentQuestionIndex] = option;
     });
@@ -234,6 +239,27 @@ class _QuestionnaireState extends State<Questionnaire> {
     }
   }
 
+  _prevBtnVisibility() {
+    if (_currentQuestionIndex > 0) {
+      return true;
+    }
+    return false;
+  }
+
+  _nextBtnVisibility() {
+    if (_currentQuestionIndex < 20) {
+      return true;
+    }
+    return false;
+  }
+
+  _submitBtnVisibility() {
+    if (_currentQuestionIndex == 20) {
+      return true;
+    }
+    return false;
+  }
+
   Widget _buildQuestion(int index) {
     Map<String, dynamic> question = _questions[index];
     List<String> options = question['options'];
@@ -241,12 +267,12 @@ class _QuestionnaireState extends State<Questionnaire> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SizedBox(height: 16),
+        const SizedBox(height: 16),
         Text(
           '${question['question']}',
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
         ),
-        SizedBox(height: 16),
+        const SizedBox(height: 16),
         ...options.map((option) => RadioListTile(
               title: Text(option),
               value: option,
@@ -263,7 +289,7 @@ class _QuestionnaireState extends State<Questionnaire> {
       child: Scaffold(
         appBar: AppBar(
           leading: IconButton(
-            icon: Icon(Icons.arrow_back_ios_new_rounded),
+            icon: const Icon(Icons.arrow_back_ios_new_rounded),
             color: Colors.black54,
             onPressed: () {
               Navigator.pop(context);
@@ -276,21 +302,67 @@ class _QuestionnaireState extends State<Questionnaire> {
           elevation: 0,
         ),
         body: Padding(
-          padding: EdgeInsets.all(16),
+          padding: const EdgeInsets.all(16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
+              Align(
+                alignment: Alignment.topRight,
+                child: Text(
+                  '${_currentQuestionIndex + 1}/21',
+                  style: const TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.black54),
+                ),
+              ),
               Expanded(child: _buildQuestion(_currentQuestionIndex)),
+              Visibility(
+                visible: _submitBtnVisibility(),
+                maintainSize: true,
+                maintainAnimation: true,
+                maintainState: true,
+                child: ElevatedButton.icon(
+                  onPressed: () {
+                    log('The Score is: $score');
+                    Navigator.pop(context);
+                    _showBottomSheet(context);
+                  },
+                  style: ElevatedButton.styleFrom(
+                      padding:
+                          EdgeInsets.symmetric(vertical: mq.height * 0.015)),
+                  icon: const Icon(Icons.library_books_rounded),
+                  label: const Text(
+                    'Submit',
+                    style: TextStyle(fontSize: 20),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: mq.height * 0.08,
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  ElevatedButton(
-                    onPressed: _previousQuestion,
-                    child: Text('Prev'),
+                  Visibility(
+                    visible: _prevBtnVisibility(),
+                    maintainSize: true,
+                    maintainAnimation: true,
+                    maintainState: true,
+                    child: ElevatedButton(
+                      onPressed: _previousQuestion,
+                      child: const Text('Prev'),
+                    ),
                   ),
-                  ElevatedButton(
-                    onPressed: _nextQuestion,
-                    child: Text('Next'),
+                  Visibility(
+                    visible: _nextBtnVisibility(),
+                    maintainSize: true,
+                    maintainAnimation: true,
+                    maintainState: true,
+                    child: ElevatedButton(
+                      onPressed: _nextQuestion,
+                      child: const Text('Next'),
+                    ),
                   ),
                 ],
               ),
@@ -299,5 +371,77 @@ class _QuestionnaireState extends State<Questionnaire> {
         ),
       ),
     );
+  }
+
+  // bottom sheet when clicked submit button
+  _showBottomSheet(BuildContext context) {
+    interpretation() {
+      if (score <= 9) {
+        return const Text(
+          'Not in Depression',
+          style: TextStyle(
+              fontSize: 20, fontWeight: FontWeight.w500, color: Colors.green),
+          textAlign: TextAlign.center,
+        );
+      } else if (score <= 18) {
+        return const Text(
+          'in Mild-Moderate Depression',
+          style: TextStyle(
+              fontSize: 20, fontWeight: FontWeight.w500, color: Colors.amber),
+          textAlign: TextAlign.center,
+        );
+      } else if (score <= 29) {
+        return const Text(
+          'in Moderate-Severe Depression',
+          style: TextStyle(
+              fontSize: 20, fontWeight: FontWeight.w500, color: Colors.amber),
+          textAlign: TextAlign.center,
+        );
+      } else {
+        return const Text(
+          'in Severe Depression',
+          style: TextStyle(
+              fontSize: 20, fontWeight: FontWeight.w500, color: Colors.red),
+          textAlign: TextAlign.center,
+        );
+      }
+    }
+
+    showModalBottomSheet(
+        context: context,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(20),
+            topRight: Radius.circular(20),
+          ),
+        ),
+        builder: (_) {
+          return ListView(
+              padding: EdgeInsets.only(
+                  top: mq.height * 0.03, bottom: mq.height * 0.05),
+              shrinkWrap: true,
+              children: [
+                const Text(
+                  'On the basis of your BDI Score your are',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(
+                  height: mq.height * 0.01,
+                ),
+                interpretation(),
+                SizedBox(
+                  height: mq.height * 0.05,
+                ),
+                const Text(
+                  'You may consider checking the Counselling Section',
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(
+                  height: mq.height * 0.05,
+                ),
+              ]);
+        });
   }
 }
