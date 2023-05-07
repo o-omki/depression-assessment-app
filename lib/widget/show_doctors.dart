@@ -13,12 +13,6 @@ class ShowDoctors extends StatefulWidget {
 }
 
 class _ShowDoctorsState extends State<ShowDoctors> {
-  final List images = [
-    "doctor1.jpeg",
-    "doctor2.jpeg",
-    "doctor3.jpg",
-    "doctor4.avif",
-  ];
 
   List<Map<String, dynamic>> counsellors = [];
 
@@ -29,11 +23,18 @@ class _ShowDoctorsState extends State<ShowDoctors> {
   }
 
   Future<void> _getAllCounsellors() async {
-    final result =
-        await MongoDbApiClient.getAllCounsellors("counsellors_master");
+    final result = await MongoDbApiClient.getAllEntities("counsellors_master");
     setState(() {
       counsellors = result;
     });
+  }
+
+  String _getAvailablityString(List<dynamic> days) {
+    final List<String> shortDays = [];
+    for (final day in days) {
+      shortDays.add(day.substring(0, 3));
+    }
+    return shortDays.join(", ");
   }
 
   @override
@@ -60,7 +61,7 @@ class _ShowDoctorsState extends State<ShowDoctors> {
             child: ListTile(
               leading: CircleAvatar(
                 radius: 35,
-                backgroundImage: AssetImage(images[index]),
+                backgroundImage: NetworkImage(counsellor["profile_picture"],),
               ),
               title: Text(
                 counsellor["name"],
@@ -91,7 +92,6 @@ class _ShowDoctorsState extends State<ShowDoctors> {
                     "${counsellor["availability"]["hours"]["start"]} - ${counsellor["availability"]["hours"]["end"]}",
                   ),
                   const SizedBox(height: 5),
-
                 ],
               ),
             ),
@@ -99,14 +99,5 @@ class _ShowDoctorsState extends State<ShowDoctors> {
         );
       },
     );
-  }
-
-  String _getAvailablityString(List<dynamic> days) {
-    // Convert Monday to Mon, etc from a list of week days and return a string
-    final List<String> shortDays = [];
-    for (final day in days) {
-      shortDays.add(day.substring(0, 3));
-    }
-    return shortDays.join(", ");
   }
 }
