@@ -202,10 +202,6 @@ class _HomeScreenState extends State<HomeScreen> {
         SizedBox(
           height: mq.height * .05,
         ),
-        Container(
-          height: 300,
-          color: Colors.red,
-        ),
       ],
     );
   }
