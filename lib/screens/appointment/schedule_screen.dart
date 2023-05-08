@@ -17,7 +17,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
   int _buttonIndex = 0;
   bool _isInitialized = false;
 
-  late List<StatelessWidget> _scheduleWidgets;
+  List<StatelessWidget> scheduleWidgets = [];
 
   List<StatelessWidget> _initialiseScheduleWidgets() {
     List<StatelessWidget> scheduleWidgets = [];
@@ -38,7 +38,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
       (_) {
         setState(
           () {
-            _scheduleWidgets.addAll(_initialiseScheduleWidgets());
+            scheduleWidgets.addAll(_initialiseScheduleWidgets());
             _isInitialized = true;
           },
         );
@@ -188,7 +188,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                 ),
               ),
               const SizedBox(height: 30),
-              _scheduleWidgets[_buttonIndex],
+              scheduleWidgets[_buttonIndex],
             ],
           ),
         ),
