@@ -1,9 +1,10 @@
-import "dart:io";
-
 import "package:flutter/material.dart";
 
 import "../../api/apis.dart";
 import "../../widget/upcoming_schedule.dart";
+import "../../widget/completed_schedule.dart";
+import "../../widget/cancelled_schedule.dart";
+import "../../api/mongo_api_client.dart";
 
 class ScheduleScreen extends StatefulWidget {
   const ScheduleScreen({super.key});
@@ -14,25 +15,61 @@ class ScheduleScreen extends StatefulWidget {
 
 class _ScheduleScreenState extends State<ScheduleScreen> {
   int _buttonIndex = 0;
+  bool _isInitialized = false;
 
-  final _scheduleWidgets = [
-    const UpcomingSchedule(),
-    Container(),
-    Container(),
-  ];
+  late List<StatelessWidget> _scheduleWidgets;
+
+  List<StatelessWidget> _initialiseScheduleWidgets() {
+    List<StatelessWidget> scheduleWidgets = [];
+    scheduleWidgets.add(UpcomingSchedule(userAppointmentsUpcoming));
+    scheduleWidgets.add(CompletedSchedule(userAppointmentsCompleted));
+    scheduleWidgets.add(CancelledSchedule(userAppointmentsCancelled));
+    return scheduleWidgets;
+  }
+
+  List<Map<String, dynamic>> userAppointmentsCompleted = [];
+  List<Map<String, dynamic>> userAppointmentsCancelled = [];
+  List<Map<String, dynamic>> userAppointmentsUpcoming = [];
 
   @override
   void initState() {
     super.initState();
-    print(APIs.user.toString());
+    _getUserAppointments().then(
+      (_) {
+        setState(
+          () {
+            _scheduleWidgets.addAll(_initialiseScheduleWidgets());
+            _isInitialized = true;
+          },
+        );
+      },
+    );
+  }
+
+  Future<void> _getUserAppointments() async {
+    final result = await MongoDbApiClient.getUserAppointments(APIs.user.uid);
+    setState(() {
+      userAppointmentsCompleted = result["completed"];
+      userAppointmentsCancelled = result["cancelled"];
+      userAppointmentsUpcoming.addAll(result["upcoming"]);
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+    if (!_isInitialized) {
+      return const Scaffold(
+        body: Center(
+          child: CircularProgressIndicator(),
+        ),
+      );
+    }
     return Material(
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.white,
+          toolbarHeight: 60,
+          elevation: 0,
+          backgroundColor: Colors.transparent,
           leading: IconButton(
             onPressed: () {
               Navigator.of(context).pop();
@@ -51,13 +88,11 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
               fontWeight: FontWeight.w500,
             ),
           ),
-          
         ),
         body: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(height: 20),
               Container(
                 padding: const EdgeInsets.all(5),
                 margin: const EdgeInsets.symmetric(horizontal: 10),
@@ -79,7 +114,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                             vertical: 12, horizontal: 25),
                         decoration: BoxDecoration(
                           color: _buttonIndex == 0
-                              ? const Color(0xFF7165D6)
+                              ? Colors.green.shade500
                               : Colors.transparent,
                           borderRadius: BorderRadius.circular(10),
                         ),
@@ -88,8 +123,9 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w500,
-                            color:
-                                _buttonIndex == 0 ? Colors.white : Colors.black38,
+                            color: _buttonIndex == 0
+                                ? Colors.white
+                                : Colors.black38,
                           ),
                         ),
                       ),
@@ -105,7 +141,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                             vertical: 12, horizontal: 25),
                         decoration: BoxDecoration(
                           color: _buttonIndex == 1
-                              ? const Color(0xFF7165D6)
+                              ? Colors.green.shade500
                               : Colors.transparent,
                           borderRadius: BorderRadius.circular(10),
                         ),
@@ -114,8 +150,9 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w500,
-                            color:
-                                _buttonIndex == 1 ? Colors.white : Colors.black38,
+                            color: _buttonIndex == 1
+                                ? Colors.white
+                                : Colors.black38,
                           ),
                         ),
                       ),
@@ -131,7 +168,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                             vertical: 12, horizontal: 25),
                         decoration: BoxDecoration(
                           color: _buttonIndex == 2
-                              ? const Color(0xFF7165D6)
+                              ? Colors.green.shade500
                               : Colors.transparent,
                           borderRadius: BorderRadius.circular(10),
                         ),
@@ -140,8 +177,9 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w500,
-                            color:
-                                _buttonIndex == 2 ? Colors.white : Colors.black38,
+                            color: _buttonIndex == 2
+                                ? Colors.white
+                                : Colors.black38,
                           ),
                         ),
                       ),
