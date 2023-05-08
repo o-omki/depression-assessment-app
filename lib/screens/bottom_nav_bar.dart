@@ -1,7 +1,7 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 
-import 'appointment/appointment_screen.dart';
+import 'appointment/appointment_home_screen.dart';
 import 'home/home_screen.dart';
 import 'journal/journal_screen.dart';
 import 'profile/profile_screen.dart';
@@ -51,7 +51,7 @@ getScreen({required int index}) {
     case 0:
       return HomeScreen();
     case 1:
-      return AppointmentScreen();
+      return AppointmentHomeScreen();
     case 2:
       return JournalScreen();
     case 3:

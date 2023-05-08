@@ -133,3 +133,6 @@ lib/generated_plugin_registrant.dart
 # Firebase related
 google-services.json
 firebase_options.dart
+
+# MongoDB
+mongo_api_client.dart
