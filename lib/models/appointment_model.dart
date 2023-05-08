@@ -1,7 +1,8 @@
-import "package:mongo_dart/mongo_dart.dart";
 class AppointmentEntry {
   final String id;
   final String userId;
+  final String userName;
+  final String userPicture;
   final String counsellorId;
   final String counsellorName;
   final String counsellorPicture;
@@ -15,6 +16,8 @@ class AppointmentEntry {
   AppointmentEntry({
     required this.id,
     required this.userId,
+    required this.userName,
+    required this.userPicture,
     required this.counsellorId,
     required this.counsellorName,
     required this.counsellorPicture,
@@ -30,6 +33,8 @@ class AppointmentEntry {
     return AppointmentEntry(
       id: json['_id'] ?? "",
       userId: json['user_id'],
+      userName: json['user_name'],
+      userPicture: json['user_picture'],
       counsellorId: json['counsellor_id'],
       counsellorName: json['counsellor_name'],
       counsellorPicture: json['counsellor_picture'],
@@ -46,6 +51,8 @@ class AppointmentEntry {
     return {
       '_id': id,
       'user_id': userId,
+      'user_name': userName,
+      'user_picture': userPicture,
       'counsellor_id': counsellorId,
       'counsellor_name': counsellorName,
       'counsellor_picture': counsellorPicture,
