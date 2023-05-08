@@ -1,8 +1,5 @@
-import "dart:math";
-
 import "package:flutter/material.dart";
 import "package:intl/intl.dart";
-import "package:mongo_dart/mongo_dart.dart" as mongo;
 import "package:serenity_space/api/mongo_api_client.dart";
 import "package:serenity_space/models/appointment_model.dart";
 
@@ -42,217 +39,206 @@ class _BookingConfirmationScreenState extends State<BookingConfirmationScreen> {
       child: Material(
         child: SafeArea(
           child: Scaffold(
-            body: SingleChildScrollView(
-              child: Column(
-                children: [
-                  Container(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
+            body: Column(
+              children: [
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Row(
                       children: [
-                        Row(
-                          children: [
-                            IconButton(
-                              icon:
-                                  const Icon(Icons.arrow_back_ios_new_rounded),
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                            ),
-                            const SizedBox(
-                              width: 60,
-                            ),
-                            const Text(
-                              "Booking Confirmation",
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ],
+                        IconButton(
+                          icon: const Icon(Icons.arrow_back_ios_new_rounded),
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
                         ),
-                        const SizedBox(height: 20),
-                        Container(
-                          height: MediaQuery.of(context).size.height * 0.3,
-                          width: MediaQuery.of(context).size.width * 0.95,
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              color: Colors.grey,
-                              width: 1,
-                            ),
-                            borderRadius: BorderRadius.circular(20),
-                            gradient: const LinearGradient(
-                              colors: [
-                                Color.fromARGB(255, 233, 235, 233),
-                                Color.fromARGB(255, 219, 238, 182),
-                              ],
-                              begin: Alignment.centerLeft,
-                              end: Alignment.centerRight,
-                            ),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(15.0),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Container(
-                                      height:
-                                          MediaQuery.of(context).size.height *
-                                              0.09,
-                                      width: MediaQuery.of(context).size.width *
-                                          0.2,
-                                      padding: EdgeInsets.all(10.0),
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(20),
-                                        color: Colors.green.shade300,
-                                      ),
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceEvenly,
-                                        children: [
-                                          Text(
-                                            widget.appointmentDetails
-                                                .appointmentDate.day
-                                                .toString(),
-                                            style: const TextStyle(
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.white,
-                                            ),
-                                          ),
-                                          Text(
-                                            DateFormat("MMMM").format(widget
-                                                .appointmentDetails
-                                                .appointmentDate),
-                                            style: const TextStyle(
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.white,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    // const SizedBox(width: 20),
-                                    Text(
-                                      DateFormat("EEEE").format(widget
-                                          .appointmentDetails.appointmentDate),
-                                      style: const TextStyle(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    const SizedBox(width: 80),
-                                    IconButton(
-                                      icon: const Icon(
-                                        Icons.edit_calendar_rounded,
-                                        color: Colors.black54,
-                                        size: 40,
-                                      ),
-                                      onPressed: () {
-                                        Navigator.pop(context);
-                                      },
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(height: 30),
-                                const Text(
-                                  "What would you like to talk about?",
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                const SizedBox(height: 10),
-                                Container(
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.1,
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.8,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(30),
-                                    color: Colors.white,
-                                  ),
-                                  child: TextFormField(
-                                    maxLines: 4,
-                                    initialValue:
-                                        widget.appointmentDetails.description,
-                                    decoration: const InputDecoration(
-                                      hintText: "Share your problems here...",
-                                      hintStyle: TextStyle(
-                                        color: Colors.black45,
-                                      ),
-                                      border: InputBorder.none,
-                                      contentPadding: EdgeInsets.all(10.0),
-                                    ),
-                                    onChanged: (value) {
-                                      widget.appointmentDetails.description =
-                                          value;
-                                    },
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
+                        const SizedBox(
+                          width: 60,
                         ),
-                        const SizedBox(height: 20),
-                        Card(
-                          margin: EdgeInsets.all(10.0),
-                          color: Colors.white70,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          child: ListTile(
-                            contentPadding: EdgeInsets.all(10.0),
-                            leading: CircleAvatar(
-                              radius: 35,
-                              backgroundImage: NetworkImage(
-                                widget.counsellor["profile_picture"],
-                              ),
-                            ),
-                            title: Text(
-                              widget.counsellor["name"],
-                              style: const TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            subtitle: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const SizedBox(height: 10),
-                                Text(
-                                  widget.counsellor["specialization"],
-                                  style: const TextStyle(
-                                    color: Colors.black45,
-                                  ),
-                                ),
-                                const SizedBox(height: 10),
-                                Text(
-                                  (widget.counsellor["availability"]["days"])
-                                      .join(", "),
-                                  style: const TextStyle(
-                                    color: Colors.black87,
-                                  ),
-                                ),
-                                const SizedBox(height: 5),
-                                Text(
-                                  "${widget.counsellor["availability"]["hours"]["start"]}",
-                                ),
-                                const SizedBox(height: 5),
-                              ],
-                            ),
+                        const Text(
+                          "Booking Confirmation",
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
                       ],
                     ),
-                  ),
-                ],
-              ),
+                    const SizedBox(height: 20),
+                    Container(
+                      height: MediaQuery.of(context).size.height * 0.3,
+                      width: MediaQuery.of(context).size.width * 0.95,
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: Colors.grey,
+                          width: 1,
+                        ),
+                        borderRadius: BorderRadius.circular(20),
+                        gradient: const LinearGradient(
+                          colors: [
+                            Color.fromARGB(255, 233, 235, 233),
+                            Color.fromARGB(255, 219, 238, 182),
+                          ],
+                          begin: Alignment.centerLeft,
+                          end: Alignment.centerRight,
+                        ),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(15.0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Container(
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.09,
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.2,
+                                  padding: const EdgeInsets.all(10.0),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20),
+                                    color: Colors.green.shade300,
+                                  ),
+                                  child: Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      Text(
+                                        widget.appointmentDetails
+                                            .appointmentDate.day
+                                            .toString(),
+                                        style: const TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                      Text(
+                                        DateFormat("MMMM").format(widget
+                                            .appointmentDetails
+                                            .appointmentDate),
+                                        style: const TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Text(
+                                  DateFormat("EEEE").format(widget
+                                      .appointmentDetails.appointmentDate),
+                                  style: const TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                const SizedBox(width: 80),
+                                IconButton(
+                                  icon: const Icon(
+                                    Icons.edit_calendar_rounded,
+                                    color: Colors.black54,
+                                    size: 40,
+                                  ),
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 30),
+                            const Text(
+                              "What would you like to talk about?",
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            const SizedBox(height: 10),
+                            Container(
+                              height: MediaQuery.of(context).size.height * 0.1,
+                              width: MediaQuery.of(context).size.width * 0.8,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(30),
+                                color: Colors.white,
+                              ),
+                              child: TextFormField(
+                                maxLines: 4,
+                                initialValue:
+                                    widget.appointmentDetails.description,
+                                decoration: const InputDecoration(
+                                  hintText: "Share your problems here...",
+                                  hintStyle: TextStyle(
+                                    color: Colors.black87,
+                                  ),
+                                  border: InputBorder.none,
+                                  contentPadding: EdgeInsets.all(10.0),
+                                ),
+                                onChanged: (value) {
+                                  widget.appointmentDetails.description = value;
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    Card(
+                      margin: const EdgeInsets.all(10.0),
+                      color: Colors.white70,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: ListTile(
+                        contentPadding: const EdgeInsets.all(10.0),
+                        leading: CircleAvatar(
+                          radius: 35,
+                          backgroundImage: NetworkImage(
+                            widget.counsellor["profile_picture"],
+                          ),
+                        ),
+                        title: Text(
+                          widget.counsellor["name"],
+                          style: const TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        subtitle: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const SizedBox(height: 10),
+                            Text(
+                              widget.counsellor["specialization"],
+                              style: const TextStyle(
+                                color: Colors.black45,
+                              ),
+                            ),
+                            const SizedBox(height: 10),
+                            Text(
+                              (widget.counsellor["availability"]["days"])
+                                  .join(", "),
+                              style: const TextStyle(
+                                color: Colors.black87,
+                              ),
+                            ),
+                            const SizedBox(height: 5),
+                            Text(
+                              "${widget.counsellor["availability"]["hours"]["start"]}",
+                            ),
+                            const SizedBox(height: 5),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
             ),
             bottomNavigationBar: InkWell(
               onTap: () {
