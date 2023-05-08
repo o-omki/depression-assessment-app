@@ -1,6 +1,7 @@
 import "package:firebase_core/firebase_core.dart";
 import "package:flutter/material.dart";
 import "package:flutter/services.dart";
+import "package:flutter_dotenv/flutter_dotenv.dart";
 import "package:serenity_space/screens/splash_screen.dart";
 
 import "firebase_options.dart";
@@ -8,7 +9,8 @@ import "firebase_options.dart";
 //global object to access device screen size
 late Size mq;
 
-void main() {
+void main() async{
+  await dotenv.load(fileName: ".env");
   WidgetsFlutterBinding.ensureInitialized();
   //start app in full screen
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
