@@ -10,6 +10,8 @@ import "./booking_confirmation_screen.dart";
 import "../../api/apis.dart";
 import "../../api/mongo_api_client.dart";
 
+import 'package:url_launcher/url_launcher.dart';
+
 class DoctorProfile extends StatefulWidget {
   late Map<String, dynamic> counsellor;
 
@@ -20,6 +22,16 @@ class DoctorProfile extends StatefulWidget {
 }
 
 class _DoctorProfileState extends State<DoctorProfile> {
+  late String phoneNumber;
+  void _launchPhone() async {
+    final Uri url = Uri.parse('tel:$phoneNumber');
+    if (await canLaunchUrl(url)) {
+      await launchUrl(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
   final List images = [
     "doctor1.jpeg",
     "doctor2.jpeg",
@@ -103,6 +115,7 @@ class _DoctorProfileState extends State<DoctorProfile> {
   @override
   void initState() {
     super.initState();
+    phoneNumber = widget.counsellor['contact']['phone'];
     eligibleDays = widget.counsellor["availability"]["days"];
     appointmentDate = findClosestMatchingDay(eligibleDays);
   }
@@ -195,7 +208,7 @@ class _DoctorProfileState extends State<DoctorProfile> {
                                     ),
                                     child: IconButton(
                                       onPressed: () {
-                                        // TODO: implement call
+                                        _launchPhone();
                                       },
                                       icon: const Icon(
                                         Icons.call,
