@@ -173,8 +173,11 @@ class ProfileScreen extends StatelessWidget {
               onPressed: () async {
                 await APIs.fireauth.signOut().then((value) async {
                   await GoogleSignIn().signOut().then((value) {
-                    Navigator.pushReplacement(context,
-                        MaterialPageRoute(builder: (context) => const Login()));
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(builder: (context) => const Login()),
+                      ModalRoute.withName('/'),
+                    );
                     // await Future.delayed(const Duration(seconds: 3))
                     //     .then((value) {
                     //   Navigator.pushReplacement(
