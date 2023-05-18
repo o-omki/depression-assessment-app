@@ -23,6 +23,7 @@ JournalEntry _$JournalEntryFromJson(Map<String, dynamic> json) => JournalEntry(
       date: DateTime.parse(json['date'] as String),
       description: json['description'] as String,
       moodValue: json['mood_value'] as String,
+      moodScore: (json['mood_score'] as num).toDouble(),
     );
 
 Map<String, dynamic> _$JournalEntryToJson(JournalEntry instance) =>
@@ -30,4 +31,5 @@ Map<String, dynamic> _$JournalEntryToJson(JournalEntry instance) =>
       'date': instance.date.toIso8601String(),
       'description': instance.description,
       'mood_value': instance.moodValue,
+      'mood_score': instance.moodScore,
     };
