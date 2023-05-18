@@ -250,7 +250,7 @@ class _LoginState extends State<Login> {
                           ),
                         ),
                         SizedBox(height: mq.height * 0.07),
-                        Spacer(),
+                        const Spacer(),
                         Column(
                           children: [
                             ElevatedButton.icon(
@@ -300,19 +300,17 @@ class _LoginState extends State<Login> {
                                     child: const Text('Sign Up'))
                               ],
                             ),
-                            Container(
-                              child: TextButton(
-                                onPressed: () {
-                                  Navigator.pushReplacement(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (_) =>
-                                              const BottomNavBar()));
-                                },
-                                child: const Text(
-                                  'Skip Login',
-                                  style: TextStyle(fontWeight: FontWeight.bold),
-                                ),
+                            TextButton(
+                              onPressed: () {
+                                Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (_) =>
+                                            const BottomNavBar()));
+                              },
+                              child: const Text(
+                                'Skip Login',
+                                style: TextStyle(fontWeight: FontWeight.bold),
                               ),
                             ),
                           ],
