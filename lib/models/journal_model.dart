@@ -27,14 +27,14 @@ class JournalEntry {
   @JsonKey(name: 'mood_value')
   String moodValue;
 
-  @JsonKey(name: 'mood_score')
+  // @JsonKey(name: 'mood_score')
   double moodScore;
 
   JournalEntry({
     required this.date,
     required this.description,
     required this.moodValue,
-    required this.moodScore,
+    this.moodScore = 0.0,
   });
 
   factory JournalEntry.fromJson(Map<String, dynamic> json) =>
