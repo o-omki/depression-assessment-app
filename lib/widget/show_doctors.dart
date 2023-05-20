@@ -1,5 +1,4 @@
 import "package:flutter/material.dart";
-import "package:http/http.dart";
 
 import "../api/backend_api.dart";
 import "../screens/appointment/doctor_profile_screen.dart";
