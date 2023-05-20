@@ -108,8 +108,8 @@ class _BookingConfirmationScreenState extends State<BookingConfirmationScreen> {
                                         MainAxisAlignment.spaceEvenly,
                                     children: [
                                       Text(
-                                        widget.appointmentDetails
-                                            .appointmentDate.day
+                                        DateTime.parse(widget.appointmentDetails
+                                            .appointmentDate).day
                                             .toString(),
                                         style: const TextStyle(
                                           fontSize: 20,
@@ -118,9 +118,9 @@ class _BookingConfirmationScreenState extends State<BookingConfirmationScreen> {
                                         ),
                                       ),
                                       Text(
-                                        DateFormat("MMMM").format(widget
-                                            .appointmentDetails
-                                            .appointmentDate),
+                                        DateFormat("MMMM").format(DateTime.parse(
+                                            widget.appointmentDetails
+                                            .appointmentDate)),
                                         style: const TextStyle(
                                           fontSize: 20,
                                           fontWeight: FontWeight.bold,
@@ -131,8 +131,8 @@ class _BookingConfirmationScreenState extends State<BookingConfirmationScreen> {
                                   ),
                                 ),
                                 Text(
-                                  DateFormat("EEEE").format(widget
-                                      .appointmentDetails.appointmentDate),
+                                  DateFormat("EEEE").format(DateTime.parse(
+                                      widget.appointmentDetails.appointmentDate)),
                                   style: const TextStyle(
                                     fontSize: 20,
                                     fontWeight: FontWeight.bold,
