@@ -2,6 +2,8 @@ import "package:flutter/material.dart";
 import "package:serenity_space/widget/search_bar.dart";
 import "package:serenity_space/widget/show_doctors.dart";
 
+import "../../api/apis.dart";
+
 class DoctorsListScreen extends StatelessWidget {
   const DoctorsListScreen({super.key});
 
@@ -12,7 +14,7 @@ class DoctorsListScreen extends StatelessWidget {
       child: Material(
         child: SafeArea(
           child: SingleChildScrollView(
-            padding: EdgeInsets.only(top: 30),
+            padding: const EdgeInsets.only(top: 30),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -20,17 +22,27 @@ class DoctorsListScreen extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 15),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: const [
-                      Text(
-                        "Hello User",
-                        style: TextStyle(
-                          fontSize: 35,
-                          fontWeight: FontWeight.w500,
+                    children: [
+                      RichText(
+                        text: TextSpan(
+                          style: const TextStyle(
+                              color: Colors.black, fontSize: 35),
+                          children: [
+                            const TextSpan(
+                                text: 'Hello ',
+                                style: TextStyle(color: Colors.black54)),
+                            TextSpan(
+                                text: MongoUser.userDetails["first_name"],
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.w500)),
+                          ],
                         ),
                       ),
                       CircleAvatar(
-                        radius: 25,
-                        backgroundImage: AssetImage("images/doctor1.jpeg"),
+                        radius: 30,
+                        backgroundImage: NetworkImage(
+                            MongoUser.userDetails["profile_picture"]),
+                        backgroundColor: Colors.white10,
                       )
                     ],
                   ),
@@ -38,9 +50,9 @@ class DoctorsListScreen extends StatelessWidget {
                 const SizedBox(height: 30),
                 const SearchBar(),
                 const SizedBox(height: 30),
-                Padding(
+                const Padding(
                   padding: EdgeInsets.only(left: 10),
-                  child: const Text(
+                  child: Text(
                     "Popular Doctors",
                     style: TextStyle(
                       fontSize: 15,
@@ -49,8 +61,6 @@ class DoctorsListScreen extends StatelessWidget {
                   ),
                 ),
                 ShowDoctors(),
-                
-        
               ],
             ),
           ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../api/apis.dart';
 import '../../main.dart';
 import '../../widget/chart_graph.dart';
 import 'questionnaire.dart';
@@ -26,6 +27,19 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
+  // Map<String, dynamic> userDetails = {};
+  // String userName = "";
+  // Future<void> getUserName() async {
+  //   userDetails =
+  //       await MongoDbApiClient.getEntityById("users_master", APIs.user.uid)
+  //           .then((userDetails) {
+  //     setState(() {
+  //       userName = userDetails["first_name"];
+  //     });
+  //     return userDetails;
+  //   });
+  // }
+
   @override
   Widget build(BuildContext context) {
     return ListView(
@@ -39,8 +53,8 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: const [
-              Text(
+            children: [
+              const Text(
                 'Hello,',
                 style: TextStyle(
                   fontSize: 30,
@@ -49,8 +63,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
               Text(
-                'Developer',
-                style: TextStyle(
+                // 'Developer',
+                MongoUser.userDetails["first_name"],
+                style: const TextStyle(
                   fontSize: 40,
                   fontWeight: FontWeight.w500,
                 ),
@@ -80,17 +95,17 @@ class _HomeScreenState extends State<HomeScreen> {
                   color: Colors.grey.withOpacity(0.5),
                   spreadRadius: 4,
                   blurRadius: 10,
-                  offset: Offset(0, 3),
+                  offset: const Offset(0, 3),
                 ),
               ],
             ),
-            child: ChartGraph(),
+            child: const ChartGraph(),
           ),
         ),
         SizedBox(
           height: mq.height * .03,
         ),
-        Divider(
+        const Divider(
           thickness: 2,
         ),
         SizedBox(
@@ -99,7 +114,7 @@ class _HomeScreenState extends State<HomeScreen> {
         Card(
           elevation: 4,
           color: Colors.green.shade100,
-          margin: EdgeInsets.symmetric(horizontal: 10),
+          margin: const EdgeInsets.symmetric(horizontal: 10),
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
           child: Padding(
@@ -150,7 +165,7 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Card(
             elevation: 4,
             color: Colors.blue.shade300,
-            margin: EdgeInsets.symmetric(horizontal: 10),
+            margin: const EdgeInsets.symmetric(horizontal: 10),
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
             child: Padding(
@@ -158,7 +173,7 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
+                  const Text(
                     'Emergency Helpline',
                     style: TextStyle(
                         fontSize: 21,

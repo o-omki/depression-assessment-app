@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../api/apis.dart';
 import '../../main.dart';
 
 class EditProfile extends StatefulWidget {
@@ -48,8 +49,8 @@ class _EditProfileState extends State<EditProfile> {
                           height: 140,
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(100),
-                            child: Image.asset(
-                              'assets/images/switzerland.png',
+                            child: Image.network(
+                              MongoUser.userDetails["profile_picture"],
                               fit: BoxFit.cover,
                             ),
                           ),
@@ -78,8 +79,8 @@ class _EditProfileState extends State<EditProfile> {
                     SizedBox(
                       height: mq.height * .015,
                     ),
-                    const Text(
-                      'developer@gmail.com',
+                    Text(
+                      MongoUser.userDetails["email"],
                       style: TextStyle(fontSize: 16, color: Colors.black54),
                     ),
                     SizedBox(
@@ -106,7 +107,7 @@ class _EditProfileState extends State<EditProfile> {
                       height: mq.height * .04,
                     ),
                     TextFormField(
-                      initialValue: 'Developer Android',
+                      initialValue: MongoUser.userDetails["first_name"],
                       decoration: InputDecoration(
                         prefixIcon: const Icon(
                           Icons.person,
@@ -151,7 +152,7 @@ class _EditProfileState extends State<EditProfile> {
                       height: mq.height * 0.28,
                     ),
                     const Text(
-                      '* To Change Stream and UID, please contact with the Admin at admin@gmail.com',
+                      '* To Change Stream and UID, please contact with the Admin at omkar@serenityspace.com',
                       style: TextStyle(fontWeight: FontWeight.w500),
                       textAlign: TextAlign.end,
                     )

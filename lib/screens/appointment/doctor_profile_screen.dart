@@ -55,8 +55,7 @@ class _DoctorProfileState extends State<DoctorProfile> {
     return closestDate;
   }
 
-  Future<Map<String, dynamic>> _getUserDetails(
-      mongo_package.ObjectId userId) async {
+  Future<Map<String, dynamic>> _getUserDetails(String userId) async {
     final user = await MongoDbApiClient.getEntityById("users_master", userId);
     return user;
   }
