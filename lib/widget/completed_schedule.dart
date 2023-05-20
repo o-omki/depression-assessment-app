@@ -92,7 +92,7 @@ class CompletedSchedule extends StatelessWidget {
                               ),
                               Text(
                                 DateFormat("yyyy-MM-dd").format(
-                                    appointment["appointment_date"]),
+                                    DateTime.parse(appointment["appointment_date"])),
                                 style: const TextStyle(
                                   fontSize: 18,
                                   color: Colors.black,
