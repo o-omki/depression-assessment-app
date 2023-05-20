@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../api/apis.dart';
 import '../../main.dart';
 import '../../widget/chart_graph.dart';
 import 'questionnaire.dart';
@@ -39,8 +40,8 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: const [
-              Text(
+            children: [
+              const Text(
                 'Hello,',
                 style: TextStyle(
                   fontSize: 30,
@@ -49,8 +50,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
               Text(
-                'Developer',
-                style: TextStyle(
+                APIs.user.displayName == ""
+                    ? "Mate!"
+                    : APIs.user.displayName!.split(" ")[0],
+                style: const TextStyle(
                   fontSize: 40,
                   fontWeight: FontWeight.w500,
                 ),
@@ -59,12 +62,12 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
         SizedBox(
-          height: mq.height * .02,
+          height: mq.height * 0.01,
         ),
         Padding(
-          padding: EdgeInsets.only(left: mq.width * .2),
+          padding: EdgeInsets.only(left: mq.width * 0.3),
           child: const Text(
-            'Your Week Stat is here',
+            'Your weekly mood~',
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.w300),
           ),
         ),
@@ -80,17 +83,17 @@ class _HomeScreenState extends State<HomeScreen> {
                   color: Colors.grey.withOpacity(0.5),
                   spreadRadius: 4,
                   blurRadius: 10,
-                  offset: Offset(0, 3),
+                  offset: const Offset(0, 3),
                 ),
               ],
             ),
-            child: ChartGraph(),
+            child: ChartGraph(APIs.user.uid),
           ),
         ),
         SizedBox(
           height: mq.height * .03,
         ),
-        Divider(
+        const Divider(
           thickness: 2,
         ),
         SizedBox(
@@ -99,7 +102,7 @@ class _HomeScreenState extends State<HomeScreen> {
         Card(
           elevation: 4,
           color: Colors.green.shade100,
-          margin: EdgeInsets.symmetric(horizontal: 10),
+          margin: const EdgeInsets.symmetric(horizontal: 10),
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
           child: Padding(
@@ -150,7 +153,7 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Card(
             elevation: 4,
             color: Colors.blue.shade300,
-            margin: EdgeInsets.symmetric(horizontal: 10),
+            margin: const EdgeInsets.symmetric(horizontal: 10),
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
             child: Padding(
@@ -158,7 +161,7 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
+                  const Text(
                     'Emergency Helpline',
                     style: TextStyle(
                         fontSize: 21,
