@@ -5,6 +5,7 @@ import 'package:fl_chart/fl_chart.dart';
 import '../api/backend_api.dart';
 import '../main.dart';
 
+// ignore: must_be_immutable
 class ChartGraph extends StatefulWidget {
   ChartGraph(this.userId, {super.key});
 
