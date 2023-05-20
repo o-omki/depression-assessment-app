@@ -1,67 +1,61 @@
-class AppointmentEntry {
-  final String id;
-  final String userId;
-  final String userName;
-  final String userPicture;
-  final String counsellorId;
-  final String counsellorName;
-  final String counsellorPicture;
+import 'package:json_annotation/json_annotation.dart';
+
+part 'appointment_model.g.dart';
+
+@JsonSerializable()
+class AppointmentModel {
+  @JsonKey(name: '_id')
+  String id;
+
+  @JsonKey(name: 'user_id')
+  String userId;
+
+  @JsonKey(name: 'user_name')
+  String userName;
+
+  @JsonKey(name: 'user_picture')
+  String userPicture;
+
   bool confirmed;
   String status;
-  DateTime appointmentDate;
-  String description;
-  final DateTime createdAt;
-  final DateTime updatedAt;
 
-  AppointmentEntry({
+  @JsonKey(name: 'appointment_date')
+  String appointmentDate;
+
+  String description;
+
+  @JsonKey(name: 'created_at')
+  String createdAt;
+
+  @JsonKey(name: 'updated_at')
+  String updatedAt;
+
+  @JsonKey(name: 'counsellor_id')
+  String counsellorId;
+
+  @JsonKey(name: 'counsellor_name')
+  String counsellorName;
+
+  @JsonKey(name: 'counsellor_picture')
+  String counsellorPicture;
+
+  AppointmentModel({
     required this.id,
     required this.userId,
     required this.userName,
     required this.userPicture,
-    required this.counsellorId,
-    required this.counsellorName,
-    required this.counsellorPicture,
     required this.confirmed,
     required this.status,
     required this.appointmentDate,
     required this.description,
     required this.createdAt,
     required this.updatedAt,
+    required this.counsellorId,
+    required this.counsellorName,
+    required this.counsellorPicture,
   });
 
-  factory AppointmentEntry.fromJson(Map<String, dynamic> json) {
-    return AppointmentEntry(
-      id: json['_id'] ?? "",
-      userId: json['user_id'],
-      userName: json['user_name'],
-      userPicture: json['user_picture'],
-      counsellorId: json['counsellor_id'],
-      counsellorName: json['counsellor_name'],
-      counsellorPicture: json['counsellor_picture'],
-      confirmed: json['confirmed'],
-      status: json['status'],
-      appointmentDate: DateTime.parse(json['appointment_date']),
-      description: json['description'],
-      createdAt: DateTime.parse(json['created_at']),
-      updatedAt: DateTime.parse(json['updated_at']),
-    );
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      '_id': id,
-      'user_id': userId,
-      'user_name': userName,
-      'user_picture': userPicture,
-      'counsellor_id': counsellorId,
-      'counsellor_name': counsellorName,
-      'counsellor_picture': counsellorPicture,
-      'confirmed': confirmed,
-      'status': status,
-      'appointment_date': appointmentDate.toIso8601String(),
-      'description': description,
-      'created_at': createdAt.toIso8601String(),
-      'updated_at': updatedAt.toIso8601String(),
-    };
-  }
+  factory AppointmentModel.fromJson(Map<String, dynamic> json) =>
+      _$AppointmentModelFromJson(json);
+  Map<String, dynamic> toJson() => _$AppointmentModelToJson(this);
 }
