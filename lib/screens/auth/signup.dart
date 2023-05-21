@@ -310,7 +310,7 @@ class _SignUpState extends State<SignUp> {
                               SizedBox(
                                 height: mq.height * 0.03,
                               ),
-                              Spacer(),
+                              const Spacer(),
                               Column(
                                 children: [
                                   ElevatedButton.icon(

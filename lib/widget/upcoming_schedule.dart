@@ -1,10 +1,11 @@
 import "package:flutter/material.dart";
 import "package:intl/intl.dart";
 
+// ignore: must_be_immutable
 class UpcomingSchedule extends StatelessWidget {
   UpcomingSchedule(this.userAppointmentsUpcoming, {super.key});
 
- List<Map<String, dynamic>> userAppointmentsUpcoming;
+  List<Map<String, dynamic>> userAppointmentsUpcoming;
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +49,7 @@ class UpcomingSchedule extends StatelessWidget {
                         title: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                             const Text(
+                            const Text(
                               "COUNSELLOR",
                               style: TextStyle(
                                 fontSize: 15,
@@ -71,7 +72,6 @@ class UpcomingSchedule extends StatelessWidget {
                             appointment["counsellor_picture"],
                           ),
                         ),
-                      
                       ),
                       const Padding(
                         padding: EdgeInsets.symmetric(
@@ -108,17 +108,16 @@ class UpcomingSchedule extends StatelessWidget {
                               Container(
                                 padding: const EdgeInsets.all(5),
                                 decoration: BoxDecoration(
-                                  border: Border.all(
-                                    width: 2.0,
+                                    border: Border.all(
+                                      width: 2.0,
+                                      color: appointment["confirmed"]
+                                          ? Colors.green
+                                          : Colors.red,
+                                    ),
                                     color: appointment["confirmed"]
                                         ? Colors.green
                                         : Colors.red,
-                                  ),
-                                  color: appointment["confirmed"]
-                                      ? Colors.green
-                                      : Colors.red,
-                                  shape: BoxShape.circle
-                                ),
+                                    shape: BoxShape.circle),
                               ),
                               const SizedBox(width: 5),
                               Text(

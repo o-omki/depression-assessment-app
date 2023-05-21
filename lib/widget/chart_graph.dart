@@ -14,14 +14,14 @@ class ChartGraph extends StatefulWidget {
 
 class _ChartGraphState extends State<ChartGraph> {
   List<FlSpot> chartData = [
-    FlSpot(0, 3),
-    FlSpot(2.6, 2),
-    FlSpot(4.9, 5),
-    FlSpot(6.8, 2.5),
-    FlSpot(8, 4),
-    FlSpot(9.5, 3),
-    FlSpot(11, 4),
-    FlSpot(12, 1),
+    const FlSpot(0, 3),
+    const FlSpot(2.6, 2),
+    const FlSpot(4.9, 5),
+    const FlSpot(6.8, 2.5),
+    const FlSpot(8, 4),
+    const FlSpot(9.5, 3),
+    const FlSpot(11, 4),
+    const FlSpot(12, 1),
   ];
 
   Widget bottomTitleWidgets(double value, TitleMeta meta) {
@@ -141,10 +141,10 @@ class _ChartGraphState extends State<ChartGraph> {
                     color: Colors.black.withOpacity(0.5),
                     width: 2,
                   ),
-                  right: BorderSide(
+                  right: const BorderSide(
                     color: Colors.transparent,
                   ),
-                  top: BorderSide(
+                  top: const BorderSide(
                     color: Colors.transparent,
                   ),
                 ),

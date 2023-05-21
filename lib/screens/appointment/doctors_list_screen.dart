@@ -1,5 +1,5 @@
 import "package:flutter/material.dart";
-import "package:serenity_space/widget/search_bar.dart";
+import "package:serenity_space/widget/search_bar.dart" as custom_search;
 import "package:serenity_space/widget/show_doctors.dart";
 
 import "../../api/apis.dart";
@@ -48,7 +48,7 @@ class DoctorsListScreen extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 30),
-                const SearchBar(),
+                const custom_search.SearchBar(),
                 const SizedBox(height: 30),
                 const Padding(
                   padding: EdgeInsets.only(left: 10),
@@ -60,7 +60,7 @@ class DoctorsListScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                ShowDoctors(),
+                const ShowDoctors(),
               ],
             ),
           ),

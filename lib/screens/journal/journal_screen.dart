@@ -46,8 +46,6 @@ class _JournalScreenState extends State<JournalScreen> {
     }
   }
 
-  bool _markedMood = false;
-
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -74,7 +72,7 @@ class _JournalScreenState extends State<JournalScreen> {
             SizedBox(
               height: mq.height * 0.0125,
             ),
-            Text(
+            const Text(
               'My Journal',
               style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600),
             ),

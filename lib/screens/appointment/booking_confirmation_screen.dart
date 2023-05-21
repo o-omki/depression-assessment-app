@@ -3,6 +3,7 @@ import "package:intl/intl.dart";
 import "package:serenity_space/api/mongo_api_client.dart";
 import "package:serenity_space/models/appointment_model.dart";
 
+// ignore: must_be_immutable
 class BookingConfirmationScreen extends StatefulWidget {
   BookingConfirmationScreen(
     this.counsellor,

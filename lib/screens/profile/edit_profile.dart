@@ -26,12 +26,12 @@ class _EditProfileState extends State<EditProfile> {
               onPressed: () {
                 Navigator.pop(context);
               },
-              icon: Icon(
+              icon: const Icon(
                 Icons.arrow_back_ios_rounded,
                 color: Colors.black54,
               ),
             ),
-            title: Text('Edit Profile'),
+            title: const Text('Edit Profile'),
             centerTitle: true,
             elevation: 0,
           ),
@@ -81,7 +81,7 @@ class _EditProfileState extends State<EditProfile> {
                     ),
                     Text(
                       MongoUser.userDetails["email"],
-                      style: TextStyle(fontSize: 16, color: Colors.black54),
+                      style: const TextStyle(fontSize: 16, color: Colors.black54),
                     ),
                     SizedBox(
                       height: mq.height * .01,
@@ -100,7 +100,7 @@ class _EditProfileState extends State<EditProfile> {
                     SizedBox(
                       height: mq.height * .01,
                     ),
-                    Divider(
+                    const Divider(
                       thickness: 1,
                     ),
                     SizedBox(
