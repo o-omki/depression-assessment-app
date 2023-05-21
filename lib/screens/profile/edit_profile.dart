@@ -81,21 +81,8 @@ class _EditProfileState extends State<EditProfile> {
                     ),
                     Text(
                       MongoUser.userDetails["email"],
-                      style: const TextStyle(fontSize: 16, color: Colors.black54),
-                    ),
-                    SizedBox(
-                      height: mq.height * .01,
-                    ),
-                    const Text(
-                      'B. Tech CSE',
-                      style: TextStyle(fontSize: 16, color: Colors.black54),
-                    ),
-                    SizedBox(
-                      height: mq.height * .01,
-                    ),
-                    const Text(
-                      'TNU2021020110608',
-                      style: TextStyle(fontSize: 16, color: Colors.black54),
+                      style:
+                          const TextStyle(fontSize: 16, color: Colors.black54),
                     ),
                     SizedBox(
                       height: mq.height * .01,
@@ -124,7 +111,7 @@ class _EditProfileState extends State<EditProfile> {
                       //     : '* Required Field',
                     ),
                     SizedBox(
-                      height: mq.height * .05,
+                      height: mq.height * .03,
                     ),
                     ElevatedButton.icon(
                       onPressed: () {
@@ -147,12 +134,81 @@ class _EditProfileState extends State<EditProfile> {
                         minimumSize: Size(mq.width * .45, mq.height * .055),
                       ),
                     ),
+                    SizedBox(
+                      height: mq.height * .04,
+                    ),
+                    TextFormField(
+                      readOnly: (MongoUser.userDetails["programme"] != null)
+                          ? true
+                          : false,
+                      initialValue: MongoUser.userDetails["programme"],
+                      decoration: InputDecoration(
+                        prefixIcon: const Icon(
+                          Icons.person,
+                          color: Colors.amber,
+                        ),
+                        hintText: 'E.g., B. Tech CSE',
+                        labelText: 'Programme',
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10)),
+                      ),
+                      // onSaved: (value) => APIs.self.name = value ?? '',
+                      // validator: (value) => value != null && value.isNotEmpty
+                      //     ? null
+                      //     : '* Required Field',
+                    ),
+                    SizedBox(
+                      height: mq.height * .01,
+                    ),
+                    TextFormField(
+                      readOnly:
+                          (MongoUser.userDetails["sex"] != null) ? true : false,
+                      initialValue: MongoUser.userDetails["sex"],
+                      decoration: InputDecoration(
+                        prefixIcon: const Icon(
+                          Icons.person,
+                          color: Colors.amber,
+                        ),
+                        hintText: 'E.g., TNU2020020110005',
+                        labelText: 'TNU ID',
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10)),
+                      ),
+                      // onSaved: (value) => APIs.self.name = value ?? '',
+                      // validator: (value) => value != null && value.isNotEmpty
+                      //     ? null
+                      //     : '* Required Field',
+                    ),
+                    SizedBox(
+                      height: mq.height * .03,
+                    ),
+                    ElevatedButton.icon(
+                      onPressed: () {
+                        // if (_formKey.currentState!.validate()) {
+                        //   log('Form Validated');
+                        //   _formKey.currentState!.save();
+                        //   APIs.updateUserDetl().then((value) {
+                        //     Dialogs.showSnackbar(
+                        //         context, 'Profile Updated Successfully');
+                        //   });
+                        // }
+                      },
+                      icon: const Icon(Icons.edit),
+                      label: const Text(
+                        'Add',
+                        style: TextStyle(fontSize: 18),
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        shape: const StadiumBorder(),
+                        minimumSize: Size(mq.width * .45, mq.height * .055),
+                      ),
+                    ),
                     // Spacer(),
                     SizedBox(
-                      height: mq.height * 0.28,
+                      height: mq.height * 0.08,
                     ),
                     const Text(
-                      '* To Change Stream and UID, please contact with the Admin at omkar@serenityspace.com',
+                      '* To change Programme and UID, please contact with the Admin at omkar@serenityspace.com',
                       style: TextStyle(fontWeight: FontWeight.w500),
                       textAlign: TextAlign.end,
                     )

@@ -72,6 +72,20 @@ class ProfileScreen extends StatelessWidget {
             style: const TextStyle(fontSize: 16, color: Colors.black54),
           ),
           SizedBox(
+            height: mq.height * .01,
+          ),
+          Text(
+            MongoUser.userDetails["programme"] ?? '',
+            style: const TextStyle(fontSize: 16, color: Colors.black54),
+          ),
+          SizedBox(
+            height: mq.height * .01,
+          ),
+          Text(
+            MongoUser.userDetails["sex"] ?? '',
+            style: const TextStyle(fontSize: 16, color: Colors.black54),
+          ),
+          SizedBox(
             height: mq.height * .025,
           ),
           SizedBox(
