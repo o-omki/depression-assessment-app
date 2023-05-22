@@ -4,6 +4,7 @@ import "package:flutter/material.dart";
 import 'package:intl/intl.dart';
 import "package:mongo_dart/mongo_dart.dart" as mongo_package;
 import "package:serenity_space/models/appointment_model.dart";
+import 'package:url_launcher/url_launcher.dart';
 
 import "./booking_confirmation_screen.dart";
 import "../../api/apis.dart";
@@ -20,6 +21,16 @@ class DoctorProfile extends StatefulWidget {
 }
 
 class _DoctorProfileState extends State<DoctorProfile> {
+  late String phoneNumber;
+  void _launchPhone() async {
+    final Uri url = Uri.parse('tel:$phoneNumber');
+    if (await canLaunchUrl(url)) {
+      await launchUrl(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
   final List images = [
     "doctor1.jpeg",
     "doctor2.jpeg",
@@ -103,6 +114,7 @@ class _DoctorProfileState extends State<DoctorProfile> {
   @override
   void initState() {
     super.initState();
+    phoneNumber = widget.counsellor['contact']['phone'];
     eligibleDays = widget.counsellor["availability"]["days"];
     appointmentDate = findClosestMatchingDay(eligibleDays);
   }
@@ -195,7 +207,7 @@ class _DoctorProfileState extends State<DoctorProfile> {
                                     ),
                                     child: IconButton(
                                       onPressed: () {
-                                        // TODO: implement call
+                                        _launchPhone();
                                       },
                                       icon: const Icon(
                                         Icons.call,

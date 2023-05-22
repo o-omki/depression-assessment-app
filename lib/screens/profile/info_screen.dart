@@ -20,6 +20,11 @@ class InfoScreen extends StatelessWidget {
       'name': 'Ashish Mandal',
       'desc': 'B. Tech CSE (CS)',
       'image': 'assets/images/switzerland.png'
+    },
+    {
+      'name': 'Sarmin Ahmed',
+      'desc': 'B. Tech CSE (AIML)',
+      'image': 'assets/images/switzerland.png'
     }
   ];
 
@@ -59,7 +64,7 @@ class InfoScreen extends StatelessWidget {
                 height: mq.height * .25,
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
-                  itemCount: 3,
+                  itemCount: 4,
                   itemBuilder: (BuildContext context, int index) {
                     return Card(
                       margin: const EdgeInsets.all(16),
