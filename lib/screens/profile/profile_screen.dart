@@ -25,8 +25,8 @@ class ProfileScreen extends StatelessWidget {
                 height: 140,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(100),
-                  child: Image.asset(
-                    'assets/images/switzerland.png',
+                  child: Image.network(
+                    MongoUser.userDetails["profile_picture"],
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -58,16 +58,32 @@ class ProfileScreen extends StatelessWidget {
           SizedBox(
             height: mq.height * .015,
           ),
-          const Text(
-            'Developer Android',
-            style: TextStyle(fontSize: 22, fontWeight: FontWeight.w500),
+          Text(
+            // 'Developer Android',
+            MongoUser.userDetails["first_name"],
+            style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w500),
           ),
           SizedBox(
             height: mq.height * .006,
           ),
-          const Text(
-            'developer@gmail.com',
-            style: TextStyle(fontSize: 16, color: Colors.black54),
+          Text(
+            // 'developer@gmail.com',
+            MongoUser.userDetails["email"],
+            style: const TextStyle(fontSize: 16, color: Colors.black54),
+          ),
+          SizedBox(
+            height: mq.height * .01,
+          ),
+          Text(
+            MongoUser.userDetails["programme"] ?? '',
+            style: const TextStyle(fontSize: 16, color: Colors.black54),
+          ),
+          SizedBox(
+            height: mq.height * .01,
+          ),
+          Text(
+            MongoUser.userDetails["sex"] ?? '',
+            style: const TextStyle(fontSize: 16, color: Colors.black54),
           ),
           SizedBox(
             height: mq.height * .025,
@@ -173,8 +189,11 @@ class ProfileScreen extends StatelessWidget {
               onPressed: () async {
                 await APIs.fireauth.signOut().then((value) async {
                   await GoogleSignIn().signOut().then((value) {
-                    Navigator.pushReplacement(context,
-                        MaterialPageRoute(builder: (context) => const Login()));
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(builder: (context) => const Login()),
+                      ModalRoute.withName('/'),
+                    );
                     // await Future.delayed(const Duration(seconds: 3))
                     //     .then((value) {
                     //   Navigator.pushReplacement(

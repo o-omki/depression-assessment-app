@@ -1,10 +1,10 @@
 import "package:flutter/material.dart";
 
+import "../api/backend_api.dart";
 import "../screens/appointment/doctor_profile_screen.dart";
-import "../api/mongo_api_client.dart";
 
 class ShowDoctors extends StatefulWidget {
-  ShowDoctors({
+  const ShowDoctors({
     super.key,
   });
 
@@ -13,7 +13,6 @@ class ShowDoctors extends StatefulWidget {
 }
 
 class _ShowDoctorsState extends State<ShowDoctors> {
-
   List<Map<String, dynamic>> counsellors = [];
 
   @override
@@ -23,7 +22,7 @@ class _ShowDoctorsState extends State<ShowDoctors> {
   }
 
   Future<void> _getAllCounsellors() async {
-    final result = await MongoDbApiClient.getAllEntities("counsellors_master");
+    final result = await getCounsellors();
     setState(() {
       counsellors = result;
     });
@@ -61,7 +60,9 @@ class _ShowDoctorsState extends State<ShowDoctors> {
             child: ListTile(
               leading: CircleAvatar(
                 radius: 35,
-                backgroundImage: NetworkImage(counsellor["profile_picture"],),
+                backgroundImage: NetworkImage(
+                  counsellor["profile_picture"],
+                ),
               ),
               title: Text(
                 counsellor["name"],

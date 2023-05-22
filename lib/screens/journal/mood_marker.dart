@@ -34,9 +34,9 @@ class _MoodMarkerState extends State<MoodMarker> {
           children: [
             Text(
               getEmoji(),
-              style: TextStyle(fontSize: 80),
+              style: const TextStyle(fontSize: 80),
             ),
-            SizedBox(height: 30),
+            const SizedBox(height: 30),
             Slider(
               value: _value,
               min: 0,
@@ -48,7 +48,7 @@ class _MoodMarkerState extends State<MoodMarker> {
                 });
               },
             ),
-            SizedBox(
+            const SizedBox(
               height: 60,
             ),
             ElevatedButton(

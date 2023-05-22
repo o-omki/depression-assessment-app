@@ -1,8 +1,10 @@
 import "package:flutter/material.dart";
 import "package:intl/intl.dart";
-import "package:serenity_space/api/mongo_api_client.dart";
-import "package:serenity_space/models/appointment_model.dart";
+import "package:serenity_space/api/backend_api.dart";
 
+import "../../models/appointment_model.dart";
+
+// ignore: must_be_immutable
 class BookingConfirmationScreen extends StatefulWidget {
   BookingConfirmationScreen(
     this.counsellor,
@@ -10,9 +12,9 @@ class BookingConfirmationScreen extends StatefulWidget {
     super.key,
   });
 
-  final Map<String, dynamic> counsellor;
-  AppointmentEntry appointmentDetails;
-  late Map<String, dynamic> appointmentDetailsMap;
+  late final Map<String, dynamic> counsellor;
+  late final AppointmentModel appointmentDetails;
+  late final Map<String, dynamic> appointmentDetailsMap;
 
   @override
   State<BookingConfirmationScreen> createState() =>
@@ -26,11 +28,11 @@ class _BookingConfirmationScreenState extends State<BookingConfirmationScreen> {
     widget.appointmentDetailsMap = widget.appointmentDetails.toJson();
   }
 
-  Map<String, dynamic> _getMongoDBInsertionDocument() {
-    Map<String, dynamic> document = widget.appointmentDetails.toJson();
-    document.remove("_id");
-    return document;
-  }
+  // Map<String, dynamic> _getMongoDBInsertionDocument() {
+  //   Map<String, dynamic> document = widget.appointmentDetails.toJson();
+  //   document.remove("_id");
+  //   return document;
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -107,8 +109,9 @@ class _BookingConfirmationScreenState extends State<BookingConfirmationScreen> {
                                         MainAxisAlignment.spaceEvenly,
                                     children: [
                                       Text(
-                                        widget.appointmentDetails
-                                            .appointmentDate.day
+                                        DateTime.parse(widget.appointmentDetails
+                                                .appointmentDate)
+                                            .day
                                             .toString(),
                                         style: const TextStyle(
                                           fontSize: 20,
@@ -117,9 +120,10 @@ class _BookingConfirmationScreenState extends State<BookingConfirmationScreen> {
                                         ),
                                       ),
                                       Text(
-                                        DateFormat("MMMM").format(widget
-                                            .appointmentDetails
-                                            .appointmentDate),
+                                        DateFormat("MMMM").format(
+                                            DateTime.parse(widget
+                                                .appointmentDetails
+                                                .appointmentDate)),
                                         style: const TextStyle(
                                           fontSize: 20,
                                           fontWeight: FontWeight.bold,
@@ -130,8 +134,9 @@ class _BookingConfirmationScreenState extends State<BookingConfirmationScreen> {
                                   ),
                                 ),
                                 Text(
-                                  DateFormat("EEEE").format(widget
-                                      .appointmentDetails.appointmentDate),
+                                  DateFormat("EEEE").format(DateTime.parse(
+                                      widget
+                                          .appointmentDetails.appointmentDate)),
                                   style: const TextStyle(
                                     fontSize: 20,
                                     fontWeight: FontWeight.bold,
@@ -242,8 +247,8 @@ class _BookingConfirmationScreenState extends State<BookingConfirmationScreen> {
             ),
             bottomNavigationBar: InkWell(
               onTap: () {
-                final document = _getMongoDBInsertionDocument();
-                MongoDbApiClient.addEntity("appointments_master", document);
+                // final document = _getMongoDBInsertionDocument();
+                createAppointment(widget.appointmentDetails);
                 Navigator.pop(context);
                 Navigator.pop(context);
                 Navigator.pop(context);
@@ -272,7 +277,7 @@ class _BookingConfirmationScreenState extends State<BookingConfirmationScreen> {
                 padding: const EdgeInsets.symmetric(vertical: 18),
                 decoration: BoxDecoration(
                   color: Colors.green.shade700,
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: BorderRadius.circular(20),
                 ),
                 child: const Center(
                   child: Text(

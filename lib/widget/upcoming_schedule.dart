@@ -1,10 +1,14 @@
 import "package:flutter/material.dart";
 import "package:intl/intl.dart";
+import "package:serenity_space/api/backend_api.dart";
+import "package:serenity_space/models/appointment_model.dart";
+import "package:serenity_space/screens/appointment/schedule_screen.dart";
 
+// ignore: must_be_immutable
 class UpcomingSchedule extends StatelessWidget {
   UpcomingSchedule(this.userAppointmentsUpcoming, {super.key});
 
- List<Map<String, dynamic>> userAppointmentsUpcoming;
+  List<Map<String, dynamic>> userAppointmentsUpcoming;
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +52,7 @@ class UpcomingSchedule extends StatelessWidget {
                         title: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                             const Text(
+                            const Text(
                               "COUNSELLOR",
                               style: TextStyle(
                                 fontSize: 15,
@@ -71,13 +75,26 @@ class UpcomingSchedule extends StatelessWidget {
                             appointment["counsellor_picture"],
                           ),
                         ),
-                      
                       ),
                       const Padding(
                         padding: EdgeInsets.symmetric(
                           horizontal: 15,
                         ),
                         child: Divider(thickness: 1, height: 20),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 15.0),
+                        child: Align(
+                          alignment: Alignment.topLeft,
+                          child: Text(
+                            "ID: ${appointment["_id"]}",
+                            style: const TextStyle(
+                              fontSize: 15,
+                              color: Colors.black87,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -93,8 +110,8 @@ class UpcomingSchedule extends StatelessWidget {
                                 width: 5,
                               ),
                               Text(
-                                DateFormat("yyyy-MM-dd")
-                                    .format(appointment["appointment_date"]),
+                                DateFormat("yyyy-MM-dd").format(DateTime.parse(
+                                    appointment["appointment_date"])),
                                 style: const TextStyle(
                                   fontSize: 18,
                                   color: Colors.black,
@@ -108,17 +125,16 @@ class UpcomingSchedule extends StatelessWidget {
                               Container(
                                 padding: const EdgeInsets.all(5),
                                 decoration: BoxDecoration(
-                                  border: Border.all(
-                                    width: 2.0,
+                                    border: Border.all(
+                                      width: 2.0,
+                                      color: appointment["confirmed"]
+                                          ? Colors.green
+                                          : Colors.red,
+                                    ),
                                     color: appointment["confirmed"]
                                         ? Colors.green
                                         : Colors.red,
-                                  ),
-                                  color: appointment["confirmed"]
-                                      ? Colors.green
-                                      : Colors.red,
-                                  shape: BoxShape.circle
-                                ),
+                                    shape: BoxShape.circle),
                               ),
                               const SizedBox(width: 5),
                               Text(
@@ -140,7 +156,24 @@ class UpcomingSchedule extends StatelessWidget {
                         children: [
                           InkWell(
                             onTap: () {
-                              // TODO: Implement cancellation
+                              appointment["status"] = "cancelled";
+                              AppointmentModel updatedAppointment =
+                                  AppointmentModel.fromJson(appointment);
+                              updateAppointment(updatedAppointment).then(
+                                (_) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                      content: Text(
+                                        "Appointment cancelled successfully",
+                                      ),
+                                    ),
+                                  );
+                                  Navigator.pushReplacement(context,
+                                      MaterialPageRoute(builder: (context) {
+                                    return const ScheduleScreen();
+                                  }));
+                                },
+                              );
                             },
                             child: Container(
                               width: 150,
@@ -164,29 +197,28 @@ class UpcomingSchedule extends StatelessWidget {
                               ),
                             ),
                           ),
-                          InkWell(
-                            onTap: () {
-                              // TODO: Implement reschedule
-                            },
-                            child: Container(
-                              width: 150,
-                              padding: const EdgeInsets.symmetric(vertical: 12),
-                              decoration: BoxDecoration(
-                                color: Colors.green.shade500,
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              child: const Center(
-                                child: Text(
-                                  "Reschedule",
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w500,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
+                          // InkWell(
+                          //   onTap: () {
+                          //   },
+                          //   child: Container(
+                          //     width: 150,
+                          //     padding: const EdgeInsets.symmetric(vertical: 12),
+                          //     decoration: BoxDecoration(
+                          //       color: Colors.green.shade500,
+                          //       borderRadius: BorderRadius.circular(10),
+                          //     ),
+                          //     child: const Center(
+                          //       child: Text(
+                          //         "Reschedule",
+                          //         style: TextStyle(
+                          //           fontSize: 18,
+                          //           fontWeight: FontWeight.w500,
+                          //           color: Colors.white,
+                          //         ),
+                          //       ),
+                          //     ),
+                          //   ),
+                          // ),
                         ],
                       ),
                       const SizedBox(height: 10),

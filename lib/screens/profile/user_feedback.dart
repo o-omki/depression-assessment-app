@@ -11,7 +11,7 @@ class UserFeedback extends StatefulWidget {
 
 class _UserFeedbackState extends State<UserFeedback> {
   int _rating = 0;
-  TextEditingController _commentController = TextEditingController();
+  final TextEditingController _commentController = TextEditingController();
 
   void _submitFeedback() {
     // TODO: Implement feedback submission logic
@@ -44,7 +44,7 @@ class _UserFeedbackState extends State<UserFeedback> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
+              const Text(
                 "Rate our app",
                 style: TextStyle(fontSize: 20.0),
               ),
@@ -115,14 +115,14 @@ class _UserFeedbackState extends State<UserFeedback> {
                 ],
               ),
               SizedBox(height: mq.height * .04),
-              Text(
+              const Text(
                 "Tell us more",
                 style: TextStyle(fontSize: 20.0),
               ),
               SizedBox(height: mq.height * .02),
               TextField(
                 controller: _commentController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   hintText: "Enter your feedback",
                   border: OutlineInputBorder(),
                 ),
@@ -144,7 +144,7 @@ class _UserFeedbackState extends State<UserFeedback> {
                     backgroundColor: Colors.amber.shade300,
                     foregroundColor: Colors.black87,
                   ),
-                  child: Text(
+                  child: const Text(
                     "Submit",
                     style: TextStyle(fontSize: 18),
                   ),

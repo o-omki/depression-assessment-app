@@ -1,15 +1,15 @@
-import "dart:developer";
-
 import "package:flutter/cupertino.dart";
 import "package:flutter/material.dart";
 import 'package:intl/intl.dart';
 import "package:mongo_dart/mongo_dart.dart" as mongo_package;
+import "package:serenity_space/models/appointment_model.dart";
+import 'package:url_launcher/url_launcher.dart';
 
-import "../../models/appointment_model.dart";
 import "./booking_confirmation_screen.dart";
 import "../../api/apis.dart";
 import "../../api/mongo_api_client.dart";
 
+// ignore: must_be_immutable
 class DoctorProfile extends StatefulWidget {
   late Map<String, dynamic> counsellor;
 
@@ -20,6 +20,16 @@ class DoctorProfile extends StatefulWidget {
 }
 
 class _DoctorProfileState extends State<DoctorProfile> {
+  late String phoneNumber;
+  void _launchPhone() async {
+    final Uri url = Uri.parse('tel:$phoneNumber');
+    if (await canLaunchUrl(url)) {
+      await launchUrl(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
   final List images = [
     "doctor1.jpeg",
     "doctor2.jpeg",
@@ -43,8 +53,7 @@ class _DoctorProfileState extends State<DoctorProfile> {
     return closestDate;
   }
 
-  Future<Map<String, dynamic>> _getUserDetails(
-      mongo_package.ObjectId userId) async {
+  Future<Map<String, dynamic>> _getUserDetails(String userId) async {
     final user = await MongoDbApiClient.getEntityById("users_master", userId);
     return user;
   }
@@ -53,7 +62,7 @@ class _DoctorProfileState extends State<DoctorProfile> {
     showModalBottomSheet(
       context: context,
       builder: (context) {
-        return Container(
+        return SizedBox(
           height: 500,
           child: ListView.builder(
             itemCount: 7,
@@ -103,6 +112,7 @@ class _DoctorProfileState extends State<DoctorProfile> {
   @override
   void initState() {
     super.initState();
+    phoneNumber = widget.counsellor['contact']['phone'];
     eligibleDays = widget.counsellor["availability"]["days"];
     appointmentDate = findClosestMatchingDay(eligibleDays);
   }
@@ -195,7 +205,7 @@ class _DoctorProfileState extends State<DoctorProfile> {
                                     ),
                                     child: IconButton(
                                       onPressed: () {
-                                        // TODO: implement call
+                                        _launchPhone();
                                       },
                                       icon: const Icon(
                                         Icons.call,
@@ -329,26 +339,26 @@ class _DoctorProfileState extends State<DoctorProfile> {
                               ),
                               child: SizedBox(
                                 width: MediaQuery.of(context).size.width / 1.4,
-                                child: Column(
+                                child: const Column(
                                   children: [
                                     ListTile(
-                                      leading: const CircleAvatar(
+                                      leading: CircleAvatar(
                                         radius: 25,
                                         backgroundImage: AssetImage(
                                             "assets/images/switzerland.png"),
                                       ),
-                                      title: const Text(
+                                      title: Text(
                                         "Alex",
                                         style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ),
-                                      subtitle: const Text("1 day ago"),
+                                      subtitle: Text("1 day ago"),
                                       trailing: Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
                                         mainAxisSize: MainAxisSize.min,
-                                        children: const [
+                                        children: [
                                           Icon(
                                             Icons.star,
                                             color: Colors.amber,
@@ -362,8 +372,8 @@ class _DoctorProfileState extends State<DoctorProfile> {
                                         ],
                                       ),
                                     ),
-                                    const SizedBox(height: 5),
-                                    const Padding(
+                                    SizedBox(height: 5),
+                                    Padding(
                                       padding:
                                           EdgeInsets.symmetric(horizontal: 10),
                                       child: Text(
@@ -457,8 +467,8 @@ class _DoctorProfileState extends State<DoctorProfile> {
                       context,
                       MaterialPageRoute(
                         builder: (context) {
-                          AppointmentEntry newAppointment = AppointmentEntry(
-                            id: '',
+                          AppointmentModel newAppointment = AppointmentModel(
+                            id: "",
                             userId: APIs.user.uid,
                             userName: APIs.user.displayName ?? "",
                             userPicture: APIs.user.photoURL ??
@@ -469,10 +479,10 @@ class _DoctorProfileState extends State<DoctorProfile> {
                                 widget.counsellor["profile_picture"],
                             confirmed: false,
                             status: 'upcoming',
-                            appointmentDate: appointmentDate,
+                            appointmentDate: appointmentDate.toIso8601String(),
                             description: '',
-                            createdAt: DateTime.now(),
-                            updatedAt: DateTime.now(),
+                            createdAt: DateTime.now().toIso8601String(),
+                            updatedAt: DateTime.now().toIso8601String(),
                           );
 
                           return BookingConfirmationScreen(

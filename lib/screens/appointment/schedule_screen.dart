@@ -1,10 +1,10 @@
 import "package:flutter/material.dart";
+import "package:serenity_space/api/backend_api.dart";
 
 import "../../api/apis.dart";
 import "../../widget/upcoming_schedule.dart";
 import "../../widget/completed_schedule.dart";
 import "../../widget/cancelled_schedule.dart";
-import "../../api/mongo_api_client.dart";
 
 class ScheduleScreen extends StatefulWidget {
   const ScheduleScreen({super.key});
@@ -47,7 +47,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
   }
 
   Future<void> _getUserAppointments() async {
-    final result = await MongoDbApiClient.getUserAppointments(APIs.user.uid);
+    final result = await fetchUserAppointments(APIs.user.uid);
     setState(() {
       userAppointmentsCompleted = result["completed"];
       userAppointmentsCancelled = result["cancelled"];
@@ -76,12 +76,12 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
             },
             icon: const Icon(
               Icons.arrow_back_ios_rounded,
-              color: Colors.black,
+              color: Colors.black54,
             ),
           ),
           centerTitle: true,
           title: const Text(
-            "Schedule",
+            "Bookings",
             style: TextStyle(
               color: Colors.black,
               fontSize: 32,

@@ -42,7 +42,7 @@ class AppointmentHomeScreen extends StatelessWidget {
                       context,
                       MaterialPageRoute(
                         builder: (context) {
-                          return DoctorsListScreen();
+                          return const DoctorsListScreen();
                         },
                       ),
                     );
@@ -101,7 +101,7 @@ class AppointmentHomeScreen extends StatelessWidget {
                       context,
                       MaterialPageRoute(
                         builder: (context) {
-                          return ScheduleScreen();
+                          return const ScheduleScreen();
                         },
                       ),
                     );

@@ -211,7 +211,7 @@ class _QuestionnaireState extends State<Questionnaire> {
     },
   ];
 
-  List<String> _selectedAnswers = List.filled(21, '');
+  final List<String> _selectedAnswers = List.filled(21, '');
 
   int score = 0;
 
