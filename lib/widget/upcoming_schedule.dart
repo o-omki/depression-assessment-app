@@ -161,20 +161,17 @@ class UpcomingSchedule extends StatelessWidget {
                                   AppointmentModel.fromJson(appointment);
                               updateAppointment(updatedAppointment).then(
                                 (_) {
-                                  ScaffoldMessenger.of(context)
-                                        .showSnackBar(
-                                      const SnackBar(
-                                        content: Text(
-                                          "Appointment cancelled successfully",
-                                        ),
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                      content: Text(
+                                        "Appointment cancelled successfully",
                                       ),
-                                    );
-                                  Navigator.push(context,
+                                    ),
+                                  );
+                                  Navigator.pushReplacement(context,
                                       MaterialPageRoute(builder: (context) {
-                                        return const ScheduleScreen();
-                                      }));
-
-                                    
+                                    return const ScheduleScreen();
+                                  }));
                                 },
                               );
                             },
