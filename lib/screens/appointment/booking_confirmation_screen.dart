@@ -110,7 +110,8 @@ class _BookingConfirmationScreenState extends State<BookingConfirmationScreen> {
                                     children: [
                                       Text(
                                         DateTime.parse(widget.appointmentDetails
-                                            .appointmentDate).day
+                                                .appointmentDate)
+                                            .day
                                             .toString(),
                                         style: const TextStyle(
                                           fontSize: 20,
@@ -119,9 +120,10 @@ class _BookingConfirmationScreenState extends State<BookingConfirmationScreen> {
                                         ),
                                       ),
                                       Text(
-                                        DateFormat("MMMM").format(DateTime.parse(
-                                            widget.appointmentDetails
-                                            .appointmentDate)),
+                                        DateFormat("MMMM").format(
+                                            DateTime.parse(widget
+                                                .appointmentDetails
+                                                .appointmentDate)),
                                         style: const TextStyle(
                                           fontSize: 20,
                                           fontWeight: FontWeight.bold,
@@ -133,7 +135,8 @@ class _BookingConfirmationScreenState extends State<BookingConfirmationScreen> {
                                 ),
                                 Text(
                                   DateFormat("EEEE").format(DateTime.parse(
-                                      widget.appointmentDetails.appointmentDate)),
+                                      widget
+                                          .appointmentDetails.appointmentDate)),
                                   style: const TextStyle(
                                     fontSize: 20,
                                     fontWeight: FontWeight.bold,
@@ -274,7 +277,7 @@ class _BookingConfirmationScreenState extends State<BookingConfirmationScreen> {
                 padding: const EdgeInsets.symmetric(vertical: 18),
                 decoration: BoxDecoration(
                   color: Colors.green.shade700,
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: BorderRadius.circular(20),
                 ),
                 child: const Center(
                   child: Text(
