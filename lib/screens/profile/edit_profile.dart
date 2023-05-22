@@ -144,7 +144,7 @@ class _EditProfileState extends State<EditProfile> {
                       initialValue: MongoUser.userDetails["programme"],
                       decoration: InputDecoration(
                         prefixIcon: const Icon(
-                          Icons.person,
+                          Icons.menu_book_rounded,
                           color: Colors.amber,
                         ),
                         hintText: 'E.g., B. Tech CSE',
@@ -166,7 +166,7 @@ class _EditProfileState extends State<EditProfile> {
                       initialValue: MongoUser.userDetails["sex"],
                       decoration: InputDecoration(
                         prefixIcon: const Icon(
-                          Icons.person,
+                          Icons.assignment_ind_rounded,
                           color: Colors.amber,
                         ),
                         hintText: 'E.g., TNU2020020110005',
@@ -193,7 +193,7 @@ class _EditProfileState extends State<EditProfile> {
                         //   });
                         // }
                       },
-                      icon: const Icon(Icons.edit),
+                      icon: const Icon(Icons.note_add_rounded),
                       label: const Text(
                         'Add',
                         style: TextStyle(fontSize: 18),
