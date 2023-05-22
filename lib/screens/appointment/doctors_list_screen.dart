@@ -11,23 +11,38 @@ class DoctorsListScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: FocusScope.of(context).unfocus,
-      child: Material(
-        child: SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          foregroundColor: Colors.black,
+          backgroundColor: Colors.white10,
+          leading: IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: const Icon(
+              Icons.arrow_back_ios_rounded,
+              color: Colors.black54,
+            ),
+          ),
+          elevation: 0,
+        ),
+        body: SafeArea(
           child: SingleChildScrollView(
-            padding: EdgeInsets.only(top: 30),
+            // padding: EdgeInsets.only(top: 30),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 15),
+                  padding: const EdgeInsets.symmetric(horizontal: 15),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       RichText(
                         text: TextSpan(
-                          style: TextStyle(color: Colors.black, fontSize: 35),
+                          style: const TextStyle(
+                              color: Colors.black, fontSize: 35),
                           children: [
-                            TextSpan(
+                            const TextSpan(
                                 text: 'Hello ',
                                 style: TextStyle(color: Colors.black54)),
                             TextSpan(
