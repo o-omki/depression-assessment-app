@@ -9,6 +9,7 @@ import 'package:serenity_space/main.dart';
 import '../../api/apis.dart';
 import '../../helper/dialogs.dart';
 import '../bottom_nav_bar.dart';
+import '../forgot_password.dart';
 import 'signup.dart';
 
 class Login extends StatefulWidget {
@@ -70,17 +71,19 @@ class _LoginState extends State<Login> {
         log('\nUserAdditionalInfo: ${user.additionalUserInfo}');
         log('\nUserCredential: ${user.credential}');
 
-        // if ((await APIs.userExists())) {
-        //   Navigator.pushReplacement(
-        //       context, MaterialPageRoute(builder: (_) => const HomeScreen()));
-        // } else {
-        //   await APIs.createUser().then((value) {
-        //     Navigator.pushReplacement(
-        //         context, MaterialPageRoute(builder: (_) => const HomeScreen()));
-        //   });
-        // }
-        Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (_) => const BottomNavBar()));
+        if ((await APIs.userExists())) {
+          log("Reached till here1");
+          Navigator.pushReplacement(
+              context, MaterialPageRoute(builder: (_) => const BottomNavBar()));
+        } else {
+          await APIs.createUserWithGoogle().then((value) {
+            log("Reached till here");
+            Navigator.pushReplacement(context,
+                MaterialPageRoute(builder: (_) => const BottomNavBar()));
+          });
+        }
+        // Navigator.pushReplacement(
+        //     context, MaterialPageRoute(builder: (_) => const BottomNavBar()));
       }
     });
   }
@@ -204,7 +207,13 @@ class _LoginState extends State<Login> {
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
                             TextButton(
-                                onPressed: () => {},
+                                onPressed: () => {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (_) =>
+                                                  const ForgotPassword()))
+                                    },
                                 child: const Text(
                                   'Forgot Password',
                                   style: TextStyle(
@@ -235,21 +244,7 @@ class _LoginState extends State<Login> {
                             ),
                           ],
                         ),
-                        SizedBox(
-                          height: mq.height * 0.01,
-                        ),
-                        TextButton(
-                          onPressed: () {},
-                          child: const Text(
-                            'Login as Counsellor',
-                            style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w500,
-                                color: Colors.indigo,
-                                letterSpacing: 1.5),
-                          ),
-                        ),
-                        SizedBox(height: mq.height * 0.07),
+                        SizedBox(height: mq.height * 0.14),
                         const Spacer(),
                         Column(
                           children: [
@@ -305,8 +300,7 @@ class _LoginState extends State<Login> {
                                 Navigator.pushReplacement(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (_) =>
-                                            const BottomNavBar()));
+                                        builder: (_) => const BottomNavBar()));
                               },
                               child: const Text(
                                 'Skip Login',

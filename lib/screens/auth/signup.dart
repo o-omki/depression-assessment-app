@@ -64,13 +64,15 @@ class _SignUpState extends State<SignUp> {
     return null;
   }
 
-  _createUser() async {
+  Future<void> _createUser() async {
     try {
       final UserCredential credential =
           await APIs.fireauth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
+      await APIs.createUserWithEmailPass(name);
+      log("Document created successfully\n");
       log("Credential: $credential");
       Dialogs.showSnackbar(context, 'Registered Successfully');
       Navigator.pushReplacement(context,
@@ -106,17 +108,17 @@ class _SignUpState extends State<SignUp> {
         log('\nUserAdditionalInfo: ${user.additionalUserInfo}');
         log('\nUserCredential: ${user.credential}');
 
-        // if ((await APIs.userExists())) {
-        //   Navigator.pushReplacement(
-        //       context, MaterialPageRoute(builder: (_) => const HomeScreen()));
-        // } else {
-        //   await APIs.createUser().then((value) {
-        //     Navigator.pushReplacement(
-        //         context, MaterialPageRoute(builder: (_) => const HomeScreen()));
-        //   });
-        // }
-        Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (_) => const BottomNavBar()));
+        if ((await APIs.userExists())) {
+          Navigator.pushReplacement(
+              context, MaterialPageRoute(builder: (_) => const BottomNavBar()));
+        } else {
+          await APIs.createUserWithGoogle().then((value) {
+            Navigator.pushReplacement(context,
+                MaterialPageRoute(builder: (_) => const BottomNavBar()));
+          });
+        }
+        // Navigator.pushReplacement(
+        //     context, MaterialPageRoute(builder: (_) => const BottomNavBar()));
       }
     });
   }
@@ -308,7 +310,7 @@ class _SignUpState extends State<SignUp> {
                               SizedBox(
                                 height: mq.height * 0.03,
                               ),
-                              Spacer(),
+                              const Spacer(),
                               Column(
                                 children: [
                                   ElevatedButton.icon(

@@ -92,8 +92,8 @@ class CompletedSchedule extends StatelessWidget {
                                 width: 5,
                               ),
                               Text(
-                                DateFormat("yyyy-MM-dd").format(
-                                    DateTime.parse(appointment["appointment_date"])),
+                                DateFormat("yyyy-MM-dd").format(DateTime.parse(
+                                    appointment["appointment_date"])),
                                 style: const TextStyle(
                                   fontSize: 18,
                                   color: Colors.black,
@@ -108,8 +108,7 @@ class CompletedSchedule extends StatelessWidget {
                             },
                             child: Container(
                               width: 130,
-                              padding:
-                                  const EdgeInsets.symmetric(vertical: 12),
+                              padding: const EdgeInsets.symmetric(vertical: 12),
                               decoration: BoxDecoration(
                                 color: Colors.green,
                                 borderRadius: BorderRadius.circular(10),

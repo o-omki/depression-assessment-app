@@ -27,6 +27,19 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
+  // Map<String, dynamic> userDetails = {};
+  // String userName = "";
+  // Future<void> getUserName() async {
+  //   userDetails =
+  //       await MongoDbApiClient.getEntityById("users_master", APIs.user.uid)
+  //           .then((userDetails) {
+  //     setState(() {
+  //       userName = userDetails["first_name"];
+  //     });
+  //     return userDetails;
+  //   });
+  // }
+
   @override
   Widget build(BuildContext context) {
     return ListView(
@@ -50,9 +63,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
               Text(
-                APIs.user.displayName == ""
-                    ? "Mate!"
-                    : APIs.user.displayName!.split(" ")[0],
+                // 'Developer',
+                MongoUser.userDetails["first_name"],
                 style: const TextStyle(
                   fontSize: 40,
                   fontWeight: FontWeight.w500,

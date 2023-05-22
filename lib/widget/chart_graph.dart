@@ -108,35 +108,34 @@ class _ChartGraphState extends State<ChartGraph> {
           height: mq.height * 0.35,
           child: LineChart(
             LineChartData(
-              lineTouchData: LineTouchData(enabled: true,
-                  touchTooltipData: LineTouchTooltipData(
-                    tooltipBgColor: Colors.blueGrey.withOpacity(0.8),
-                    getTooltipItems: (List<LineBarSpot> touchedBarSpots) {
-                      return touchedBarSpots.map((barSpot) {
-                        final flSpot = barSpot;
-                        if (flSpot.x == 0 || flSpot.x == 6) {
-                          return null;
-                        }
+              lineTouchData: LineTouchData(
+                enabled: true,
+                touchTooltipData: LineTouchTooltipData(
+                  tooltipBgColor: Colors.blueGrey.withOpacity(0.8),
+                  getTooltipItems: (List<LineBarSpot> touchedBarSpots) {
+                    return touchedBarSpots.map((barSpot) {
+                      final flSpot = barSpot;
+                      if (flSpot.x == 0 || flSpot.x == 6) {
+                        return null;
+                      }
 
-                        return LineTooltipItem(
-                          '${flSpot.y}',
-                          const TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        );
-                      }).toList();
-                    },
-                  ),                  
-                  ),
-                  
+                      return LineTooltipItem(
+                        '${flSpot.y}',
+                        const TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      );
+                    }).toList();
+                  },
+                ),
+              ),
               lineBarsData: [
                 LineChartBarData(
                   spots: chartData,
                   isCurved: true,
                   barWidth: 4,
                   color: Colors.blue,
-                  
                 ),
               ],
               minY: 0,

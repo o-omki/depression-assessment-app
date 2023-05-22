@@ -51,8 +51,6 @@ class _JournalScreenState extends State<JournalScreen> {
     }
   }
 
-  // bool _markedMood = false;
-
   @override
   Widget build(BuildContext context) {
     return Padding(

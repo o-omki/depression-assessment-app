@@ -2,6 +2,8 @@ import "package:flutter/material.dart";
 import "package:serenity_space/widget/search_bar.dart" as custom_search;
 import "package:serenity_space/widget/show_doctors.dart";
 
+import "../../api/apis.dart";
+
 class DoctorsListScreen extends StatelessWidget {
   const DoctorsListScreen({super.key});
 
@@ -9,7 +11,7 @@ class DoctorsListScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: FocusScope.of(context).unfocus,
-      child: const Material(
+      child: Material(
         child: SafeArea(
           child: SingleChildScrollView(
             padding: EdgeInsets.only(top: 30),
@@ -21,24 +23,33 @@ class DoctorsListScreen extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        "Hello User",
-                        style: TextStyle(
-                          fontSize: 35,
-                          fontWeight: FontWeight.w500,
+                      RichText(
+                        text: TextSpan(
+                          style: TextStyle(color: Colors.black, fontSize: 35),
+                          children: [
+                            TextSpan(
+                                text: 'Hello ',
+                                style: TextStyle(color: Colors.black54)),
+                            TextSpan(
+                                text: MongoUser.userDetails["first_name"],
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.w500)),
+                          ],
                         ),
                       ),
                       CircleAvatar(
-                        radius: 25,
-                        backgroundImage: AssetImage("images/doctor1.jpeg"),
+                        radius: 30,
+                        backgroundImage: NetworkImage(
+                            MongoUser.userDetails["profile_picture"]),
+                        backgroundColor: Colors.white10,
                       )
                     ],
                   ),
                 ),
-                SizedBox(height: 30),
-                custom_search.SearchBar(),
-                SizedBox(height: 30),
-                Padding(
+                const SizedBox(height: 30),
+                const custom_search.SearchBar(),
+                const SizedBox(height: 30),
+                const Padding(
                   padding: EdgeInsets.only(left: 10),
                   child: Text(
                     "Popular Doctors",
@@ -48,9 +59,7 @@ class DoctorsListScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                ShowDoctors(),
-                
-        
+                const ShowDoctors(),
               ],
             ),
           ),
