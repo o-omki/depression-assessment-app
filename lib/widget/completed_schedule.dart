@@ -1,6 +1,7 @@
 import "package:flutter/material.dart";
 import "package:intl/intl.dart";
 
+// ignore: must_be_immutable
 class CompletedSchedule extends StatelessWidget {
   CompletedSchedule(this.userAppointmentsCompleted, {super.key});
 
@@ -92,7 +93,7 @@ class CompletedSchedule extends StatelessWidget {
                               ),
                               Text(
                                 DateFormat("yyyy-MM-dd").format(
-                                    appointment["appointment_date"]),
+                                    DateTime.parse(appointment["appointment_date"])),
                                 style: const TextStyle(
                                   fontSize: 18,
                                   color: Colors.black,

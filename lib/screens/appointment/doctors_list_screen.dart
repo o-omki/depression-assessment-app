@@ -1,5 +1,5 @@
 import "package:flutter/material.dart";
-import "package:serenity_space/widget/search_bar.dart";
+import "package:serenity_space/widget/search_bar.dart" as custom_search;
 import "package:serenity_space/widget/show_doctors.dart";
 
 class DoctorsListScreen extends StatelessWidget {
@@ -9,7 +9,7 @@ class DoctorsListScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: FocusScope.of(context).unfocus,
-      child: Material(
+      child: const Material(
         child: SafeArea(
           child: SingleChildScrollView(
             padding: EdgeInsets.only(top: 30),
@@ -17,10 +17,10 @@ class DoctorsListScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15),
+                  padding: EdgeInsets.symmetric(horizontal: 15),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: const [
+                    children: [
                       Text(
                         "Hello User",
                         style: TextStyle(
@@ -35,12 +35,12 @@ class DoctorsListScreen extends StatelessWidget {
                     ],
                   ),
                 ),
-                const SizedBox(height: 30),
-                const SearchBar(),
-                const SizedBox(height: 30),
+                SizedBox(height: 30),
+                custom_search.SearchBar(),
+                SizedBox(height: 30),
                 Padding(
                   padding: EdgeInsets.only(left: 10),
-                  child: const Text(
+                  child: Text(
                     "Popular Doctors",
                     style: TextStyle(
                       fontSize: 15,

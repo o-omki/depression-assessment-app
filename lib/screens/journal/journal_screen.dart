@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:serenity_space/api/backend_api.dart';
+import 'package:serenity_space/models/journal_model.dart';
 
+import '../../api/apis.dart';
 import '../../main.dart';
 import 'mood_marker.dart';
 
@@ -20,6 +23,8 @@ class _JournalScreenState extends State<JournalScreen> {
   void initState() {
     super.initState();
     _selectedDate = DateTime.now();
+    _selectedDate = DateTime(_selectedDate.year, _selectedDate.month,
+        _selectedDate.day); // Remove the time part
     _textEditingController = TextEditingController();
   }
 
@@ -46,7 +51,7 @@ class _JournalScreenState extends State<JournalScreen> {
     }
   }
 
-  bool _markedMood = false;
+  // bool _markedMood = false;
 
   @override
   Widget build(BuildContext context) {
@@ -74,7 +79,7 @@ class _JournalScreenState extends State<JournalScreen> {
             SizedBox(
               height: mq.height * 0.0125,
             ),
-            Text(
+            const Text(
               'My Journal',
               style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600),
             ),
@@ -130,7 +135,21 @@ class _JournalScreenState extends State<JournalScreen> {
             SizedBox(
               height: mq.height * 0.035,
             ),
-            ElevatedButton(onPressed: () {}, child: const Text('Save')),
+            ElevatedButton(
+              onPressed: () async {
+                JournalEntry newEntry = JournalEntry(
+                  date: _selectedDate,
+                  description: _textEditingController.text,
+                  moodValue: "happiness",
+                );
+
+                await createJournalEntry(
+                  APIs.user.uid,
+                  newEntry,
+                );
+              },
+              child: const Text('Save'),
+            ),
           ],
         ),
       ),
