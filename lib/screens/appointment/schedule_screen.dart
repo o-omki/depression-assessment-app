@@ -76,12 +76,12 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
             },
             icon: const Icon(
               Icons.arrow_back_ios_rounded,
-              color: Colors.black,
+              color: Colors.black54,
             ),
           ),
           centerTitle: true,
           title: const Text(
-            "Schedule",
+            "Bookings",
             style: TextStyle(
               color: Colors.black,
               fontSize: 32,
