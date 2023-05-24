@@ -159,7 +159,7 @@ class _JournalScreenState extends State<JournalScreen> {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
                           backgroundColor: Colors.red,
-                          content: Text('Journal Entry Creation Failed Try again later'),
+                          content: Text('Journal Entry Creation mmight have failed. Verify and Try again later'),
                         ),
                       );
                     }
