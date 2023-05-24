@@ -60,7 +60,11 @@ class ProfileScreen extends StatelessWidget {
           ),
           Text(
             // 'Developer Android',
-            MongoUser.userDetails["first_name"],
+            MongoUser.userDetails["first_name"] +
+                " " +
+                MongoUser.userDetails["middle_name"] +
+                " " +
+                MongoUser.userDetails["last_name"],
             style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w500),
           ),
           SizedBox(

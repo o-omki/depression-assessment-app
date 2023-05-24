@@ -94,7 +94,11 @@ class _EditProfileState extends State<EditProfile> {
                       height: mq.height * .04,
                     ),
                     TextFormField(
-                      initialValue: MongoUser.userDetails["first_name"],
+                      initialValue: MongoUser.userDetails["first_name"] +
+                          " " +
+                          MongoUser.userDetails["middle_name"] +
+                          " " +
+                          MongoUser.userDetails["last_name"],
                       decoration: InputDecoration(
                         prefixIcon: const Icon(
                           Icons.person,
