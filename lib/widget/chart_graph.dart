@@ -102,6 +102,19 @@ class _ChartGraphState extends State<ChartGraph> {
     if (!_isInitialized) {
       return const Center(child: CircularProgressIndicator());
     }
+    if(moodGraphEntries.isEmpty){
+      return const Center(
+        child: Text(
+          "You have no mood entries yet. Check out the Journal tab to add some!",
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.w500,
+            color: Colors.black,
+          ),
+        ),
+      );
+
+    }
     return Column(
       children: [
         SizedBox(
