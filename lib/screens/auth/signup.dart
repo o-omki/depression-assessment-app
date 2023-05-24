@@ -64,14 +64,36 @@ class _SignUpState extends State<SignUp> {
     return null;
   }
 
+  String firstName = "";
+  String middleName = "";
+  String lastName = "";
+
+  nameSplitter() {
+    List<String> nameSplit = name.split(" ");
+    if (nameSplit.length == 1) {
+      firstName = nameSplit[0];
+      middleName = "";
+      lastName = "";
+    } else if (nameSplit.length == 2) {
+      firstName = nameSplit[0];
+      middleName = "";
+      lastName = nameSplit[1];
+    } else {
+      firstName = nameSplit[0];
+      middleName = nameSplit[1];
+      lastName = nameSplit[2];
+    }
+  }
+
   Future<void> _createUser() async {
+    nameSplitter();
     try {
       final UserCredential credential =
           await APIs.fireauth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
-      await APIs.createUserWithEmailPass(name);
+      await APIs.createUserWithEmailPass(firstName, middleName, lastName);
       log("Document created successfully\n");
       log("Credential: $credential");
       Dialogs.showSnackbar(context, 'Registered Successfully');

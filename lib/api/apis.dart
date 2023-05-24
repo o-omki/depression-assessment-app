@@ -70,14 +70,15 @@ class APIs {
   }
 
   // for creating a new user for email-password log in
-  static Future<void> createUserWithEmailPass(name) async {
+  static Future<void> createUserWithEmailPass(
+      firstName, middleName, lastName) async {
     final time = DateTime.now().millisecondsSinceEpoch.toString();
     Map<String, dynamic> mongoDoc = {
       "_id": user.uid,
       "email": user.email.toString(),
-      "first_name": name,
-      "middle_name": null,
-      "last_name": null,
+      "first_name": firstName,
+      "middle_name": middleName,
+      "last_name": lastName,
       "age": null,
       "sex": null,
       "address": {
