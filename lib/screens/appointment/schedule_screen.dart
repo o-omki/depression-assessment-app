@@ -95,7 +95,8 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
             children: [
               Container(
                 padding: const EdgeInsets.all(5),
-                margin: const EdgeInsets.symmetric(horizontal: 10),
+                width: MediaQuery.of(context).size.width,
+                margin: const EdgeInsets.symmetric(horizontal: 40),
                 decoration: BoxDecoration(
                   color: const Color(0xFFF4F6FA),
                   borderRadius: BorderRadius.circular(10),
@@ -111,7 +112,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                       },
                       child: Container(
                         padding: const EdgeInsets.symmetric(
-                            vertical: 12, horizontal: 25),
+                            vertical: 12, horizontal: 15),
                         decoration: BoxDecoration(
                           color: _buttonIndex == 0
                               ? Colors.green.shade500
@@ -138,7 +139,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                       },
                       child: Container(
                         padding: const EdgeInsets.symmetric(
-                            vertical: 12, horizontal: 25),
+                            vertical: 12, horizontal: 15),
                         decoration: BoxDecoration(
                           color: _buttonIndex == 1
                               ? Colors.green.shade500
@@ -165,7 +166,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                       },
                       child: Container(
                         padding: const EdgeInsets.symmetric(
-                            vertical: 12, horizontal: 25),
+                            vertical: 12, horizontal: 15),
                         decoration: BoxDecoration(
                           color: _buttonIndex == 2
                               ? Colors.green.shade500
