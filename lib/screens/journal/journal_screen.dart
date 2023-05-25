@@ -143,7 +143,7 @@ class _JournalScreenState extends State<JournalScreen> {
                     description: _textEditingController.text,
                     moodValue: "happiness",
                   );
-    
+
                   journalCreated = await createJournalEntry(
                     APIs.user.uid,
                     newEntry,
@@ -159,7 +159,8 @@ class _JournalScreenState extends State<JournalScreen> {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
                           backgroundColor: Colors.red,
-                          content: Text('Journal Entry Creation mmight have failed. Verify and Try again later'),
+                          content: Text(
+                              'Journal Entry Creation might have failed. Verify and Try again later'),
                         ),
                       );
                     }
