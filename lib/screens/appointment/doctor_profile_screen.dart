@@ -31,6 +31,30 @@ class _DoctorProfileState extends State<DoctorProfile> {
     }
   }
 
+  late String emailId;
+  void _launchEmail() async {
+    String? encodeQueryParameters(Map<String, String> params) {
+      return params.entries
+          .map((MapEntry<String, String> e) =>
+              '${Uri.encodeComponent(e.key)}=${Uri.encodeComponent(e.value)}')
+          .join('&');
+    }
+
+    final Uri emailUri = Uri(
+      scheme: 'mailto',
+      path: emailId,
+      query: encodeQueryParameters(<String, String>{
+        // 'subject': 'Example Subject & Symbols are allowed!',
+      }),
+    );
+
+    if (await canLaunchUrl(emailUri)) {
+      launchUrl(emailUri);
+    } else {
+      throw 'Could not launch $emailUri';
+    }
+  }
+
   final List images = [
     "doctor1.jpeg",
     "doctor2.jpeg",
@@ -114,6 +138,7 @@ class _DoctorProfileState extends State<DoctorProfile> {
   void initState() {
     super.initState();
     phoneNumber = widget.counsellor['contact']['phone'];
+    emailId = widget.counsellor['contact']['email'];
     eligibleDays = widget.counsellor["availability"]["days"];
     appointmentDate = findClosestMatchingDay(eligibleDays);
   }
@@ -224,10 +249,11 @@ class _DoctorProfileState extends State<DoctorProfile> {
                                     ),
                                     child: IconButton(
                                       onPressed: () {
-                                        // TODO: implement CHAT
+                                        _launchEmail();
                                       },
                                       icon: const Icon(
-                                        CupertinoIcons.chat_bubble_text_fill,
+                                        // CupertinoIcons.chat_bubble_text_fill,
+                                        CupertinoIcons.mail_solid,
                                         color: Colors.white,
                                       ),
                                       iconSize: 30.0,
