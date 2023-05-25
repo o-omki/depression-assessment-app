@@ -147,7 +147,7 @@ class _JournalScreenState extends State<JournalScreen> {
                   journalCreated = await createJournalEntry(
                     APIs.user.uid,
                     newEntry,
-                  ).then((journalCreated) {
+                  ).then((_) {
                     if (journalCreated) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
