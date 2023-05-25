@@ -102,29 +102,29 @@ class CompletedSchedule extends StatelessWidget {
                               ),
                             ],
                           ),
-                          InkWell(
-                            onTap: () {
-                              // TODO: Review Button working.
-                            },
-                            child: Container(
-                              width: 130,
-                              padding: const EdgeInsets.symmetric(vertical: 12),
-                              decoration: BoxDecoration(
-                                color: Colors.green,
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              child: const Center(
-                                child: Text(
-                                  "Write a review",
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w500,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
+                          // InkWell(
+                          //   onTap: () {
+                          //     // TODO: Review Button working.
+                          //   },
+                          //   child: Container(
+                          //     width: 130,
+                          //     padding: const EdgeInsets.symmetric(vertical: 12),
+                          //     decoration: BoxDecoration(
+                          //       color: Colors.green,
+                          //       borderRadius: BorderRadius.circular(10),
+                          //     ),
+                          //     child: const Center(
+                          //       child: Text(
+                          //         "Write a review",
+                          //         style: TextStyle(
+                          //           fontSize: 16,
+                          //           fontWeight: FontWeight.w500,
+                          //           color: Colors.white,
+                          //         ),
+                          //       ),
+                          //     ),
+                          //   ),
+                          // ),
                         ],
                       ),
                     ],
